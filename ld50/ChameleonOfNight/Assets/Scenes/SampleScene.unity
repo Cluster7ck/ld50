@@ -1588,8 +1588,8 @@ MonoBehaviour:
   eventSystem: {fileID: 1885517152}
   insectPlaneLayer:
     serializedVersion: 2
-    m_Bits: 16
-  chameleonController: {fileID: 0}
+    m_Bits: 1024
+  chameleonController: {fileID: 1313478433}
 --- !u!4 &335411011
 Transform:
   m_ObjectHideFlags: 0
@@ -1600,7 +1600,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.499175, y: -13.199127, z: 47.10225}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 939095596}
+  - {fileID: 1885517153}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1615,8 +1617,8 @@ GameObject:
   - component: {fileID: 373326652}
   - component: {fileID: 373326651}
   - component: {fileID: 373326650}
-  m_Layer: 4
-  m_Name: Cube
+  m_Layer: 10
+  m_Name: InsectPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2880,6 +2882,24 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &695629155 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3000524393225805470, guid: 4f699647e46f5b941b976d9a1beba4cc, type: 3}
+  m_PrefabInstance: {fileID: 3803442147378894684}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &695629159
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695629155}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.10011652
+  m_Center: {x: 3.5527137e-15, y: 1.3322676e-15, z: 0.000000014901165}
 --- !u!1 &701791698
 GameObject:
   m_ObjectHideFlags: 0
@@ -3727,7 +3747,7 @@ GameObject:
   - component: {fileID: 939095594}
   - component: {fileID: 939095593}
   m_Layer: 0
-  m_Name: Sphere (1)
+  m_Name: HitIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3802,12 +3822,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939095592}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.499175, y: 13.199127, z: -47.10225}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_Father: {fileID: 335411011}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &955963921
 GameObject:
@@ -5958,7 +5978,7 @@ GameObject:
   - component: {fileID: 1313478434}
   - component: {fileID: 1313478433}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: ChameleonController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5977,6 +5997,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tongueOrigin: {fileID: 675144594}
+  tongue: {fileID: 1565815113}
+  tongueCollider: {fileID: 1893021216}
+  tongueFlickExtendTime: 0.2
+  tongueFlickeExtendEase: 0
+  tongueFlickRetreatTime: 0.2
+  tongueFlickeRetreatEase: 0
 --- !u!4 &1313478434
 Transform:
   m_ObjectHideFlags: 0
@@ -5990,8 +6016,9 @@ Transform:
   m_Children:
   - {fileID: 675144594}
   - {fileID: 1565815112}
+  - {fileID: 1893021216}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1340223831
 GameObject:
@@ -7430,8 +7457,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 1, z: -2}
-  - {x: 0, y: 3, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -9484,13 +9511,57 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1885517150}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.499175, y: 13.199127, z: -47.10225}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_Father: {fileID: 335411011}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1893021215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1893021216}
+  - component: {fileID: 1893021217}
+  m_Layer: 12
+  m_Name: TongueTipCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1893021216
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893021215}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_Children: []
+  m_Father: {fileID: 1313478434}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1893021217
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893021215}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1895543025
 PrefabInstance:
   m_ObjectHideFlags: 0
