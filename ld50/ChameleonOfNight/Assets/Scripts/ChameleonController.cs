@@ -7,7 +7,7 @@ public enum TongueUpType
 {
     Nothing,
     Chain,
-    Start
+    Star
 }
 
 public class ChameleonController : MonoBehaviour
@@ -22,7 +22,7 @@ public class ChameleonController : MonoBehaviour
     {
         if(currentlyExtending) return;
         activeTongue = Instantiate(tonguePrefab);
-        activeTongue.ExtendFrom(tongueOrigin.position, worldPos, TongueUpType.Chain, 1, OnExtendCompleted, tonguePrefab);
+        activeTongue.ExtendFrom(tongueOrigin.position, worldPos, TongueUpType.Star, 4, OnExtendCompleted, tonguePrefab);
         currentlyExtending = true;
     }
 

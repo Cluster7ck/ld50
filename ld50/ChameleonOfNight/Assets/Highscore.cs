@@ -20,5 +20,20 @@ public class Highscore : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        highScoreText.text = currentHighscore.ToString();
+    }
+
+    private void Update()
+    {
+        if(currentHighscore != lastHighScore)
+        {
+            highScoreText.text = currentHighscore.ToString();
+            lastHighScore = currentHighscore;
+        }
+    }
+
+    public void AddScore(int score)
+    {
+        currentHighscore += score;
     }
 }
