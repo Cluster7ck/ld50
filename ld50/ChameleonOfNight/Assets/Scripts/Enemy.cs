@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float pullToTarget = 1;
     [SerializeField] private float step;
     bool reached = false;
+    bool sucking = true;
     Vector3 lastPos;
     TweenerCore<Vector3, Vector3, VectorOptions> currentMover;
     bool isHit = false;
@@ -29,6 +30,9 @@ public class Enemy : MonoBehaviour
     {
         if(isHit) return;
         // TODO DEATH ANIMATION
+
+        if(sucking)
+            SleepyBoy.Instance.DeSuck();
 
         isHit = true;
         transform.SetParent(tongueTip);
@@ -68,9 +72,16 @@ public class Enemy : MonoBehaviour
                 var newTarget = lastPos + dir;
                 lastPos = newTarget;
                 reached = true;
+
+                currentMover?.Kill();
+                currentMover = transform.DOMove(lastPos, step/_flightTime).OnComplete(() => {
+                    SleepyBoy.Instance.Suck();
+                });
             }
-            currentMover?.Kill();
-            currentMover = transform.DOMove(lastPos, step/_flightTime);
+            else{
+                currentMover?.Kill();
+                currentMover = transform.DOMove(lastPos, step/_flightTime);
+            }
         }
     }
 

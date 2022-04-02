@@ -27,7 +27,6 @@ public class InputShit : MonoBehaviour
             
             if(Input.GetMouseButtonDown(0))
             {
-                Debug.Log("Click");
                 chameleonController.Click(cursorWorldPos);
             }
         }

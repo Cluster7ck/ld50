@@ -8,12 +8,30 @@ public class ChameleonController : MonoBehaviour
     [SerializeField] private Transform tongueOrigin;
     [SerializeField] private LineRenderer tongue;
     [SerializeField] private Transform tongueCollider;
+    [SerializeField] private SphereCollider sphereCollider;
+    [SerializeField] private LayerMask insectMask;
 
     [SerializeField] private float tongueFlickExtendTime = 0.2f;
     [SerializeField] private Ease tongueFlickeExtendEase;
     [SerializeField] private float tongueFlickRetreatTime = 0.2f;
     [SerializeField] private Ease tongueFlickeRetreatEase;
+
     private Sequence sequence;
+
+    void Update()
+    {
+        var hitInsects = Physics.OverlapSphere(sphereCollider.transform.position, sphereCollider.radius, insectMask);
+        if(hitInsects.Length > 0)
+        {
+            foreach(var insectCollider in hitInsects)
+            {
+                var enemy = insectCollider.GetComponent<Enemy>();
+                // hit enemy
+                if(enemy)
+                    enemy.Hit(transform, 0.4f);
+            }
+        }
+    }
 
     public void Click(Vector3 worldPos)
     {

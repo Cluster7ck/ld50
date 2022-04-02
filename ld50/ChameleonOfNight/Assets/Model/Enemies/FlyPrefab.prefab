@@ -127,6 +127,9 @@ GameObject:
   - component: {fileID: 1826309173626084967}
   - component: {fileID: 3114295259655567150}
   - component: {fileID: 2950048277847829456}
+  - component: {fileID: 4370724433264109814}
+  - component: {fileID: 6296857957493505552}
+  - component: {fileID: 8992022231058899718}
   m_Layer: 11
   m_Name: FlyPrefab
   m_TagString: Untagged
@@ -184,5 +187,44 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7791026, y: 0.8789509, z: 0.18554737}
-  m_Center: {x: -0.0012888784, y: 0.0046557365, z: -0.010151888}
+  m_Size: {x: 0.48763016, y: 0.2060917, z: 0.09524001}
+  m_Center: {x: 0.081489556, y: 0.34108493, z: 0.035001744}
+--- !u!65 &4370724433264109814
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5805448201070011187}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4935569, y: 0.18781091, z: 0.10324395}
+  m_Center: {x: 0.036846183, y: 0.14268187, z: 0.035136726}
+--- !u!65 &6296857957493505552
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5805448201070011187}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.47380522, y: 0.083295986, z: 0.10654327}
+  m_Center: {x: -0.010061784, y: 0.005257448, z: 0.036786363}
+--- !u!65 &8992022231058899718
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5805448201070011187}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7971233, y: 0.30663562, z: 0.10654327}
+  m_Center: {x: 0.0048544994, y: -0.19007841, z: 0.036786363}
