@@ -4,7 +4,9 @@ using UnityEngine;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using UnityEngine.Events;
 
+public class OnEnemyKill : UnityEvent {}
 public class Enemy : MonoBehaviour
 {
     private Vector3 _flyTarget;
@@ -12,6 +14,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _flightDirectionChanges = 10;
     [SerializeField] private float pullToTarget = 1;
     [SerializeField] private float step;
+    [SerializeField] public int scoreValue;
+    public OnEnemyKill OnEnemyKill { get; } = new OnEnemyKill();
+
     bool reached = false;
     bool sucking = true;
     Vector3 lastPos;
@@ -22,8 +27,6 @@ public class Enemy : MonoBehaviour
     public void SetTarget (GameObject target) {
         _flyTarget = target.transform.position;
         lastPos = transform.position;
-
-        //transform.DOPath(JitterPath(target.transform.position), _flightTime);
     }
 
     public void Hit(Transform tongueTip, float delay)
@@ -34,6 +37,7 @@ public class Enemy : MonoBehaviour
         if(sucking)
             SleepyBoy.Instance.DeSuck();
 
+        OnEnemyKill.Invoke();
         isHit = true;
         transform.SetParent(tongueTip);
         StartCoroutine(DelayDestroy(delay));

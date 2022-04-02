@@ -28,7 +28,7 @@ public class ChameleonController : MonoBehaviour
                 var enemy = insectCollider.GetComponent<Enemy>();
                 // hit enemy
                 if(enemy)
-                    enemy.Hit(transform, 0.4f);
+                    enemy.Hit(sphereCollider.transform, 0.4f);
             }
         }
     }
