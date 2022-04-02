@@ -224,7 +224,7 @@ MonoBehaviour:
   insectMask:
     serializedVersion: 2
     m_Bits: 2048
-  tongueExtendSpeed: 4
+  tongueExtendSpeed: 12
   tongueRetreatSpeed: 14
   tongueFlickeExtendEase: 15
   tongueFlickeRetreatEase: 17

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
+public class OnHighscore : UnityEvent<int> {}
 public class Highscore : MonoBehaviour
 {
     private static Highscore instance;
@@ -14,6 +16,7 @@ public class Highscore : MonoBehaviour
 
     [SerializeField] private TMPro.TMP_Text highScoreText;
 
+    public OnHighscore OnHighscore = new OnHighscore();
     private int currentHighscore = 0;
     private int lastHighScore = 0;
 
@@ -29,6 +32,7 @@ public class Highscore : MonoBehaviour
         {
             highScoreText.text = currentHighscore.ToString();
             lastHighScore = currentHighscore;
+            OnHighscore.Invoke(currentHighscore);
         }
     }
 
