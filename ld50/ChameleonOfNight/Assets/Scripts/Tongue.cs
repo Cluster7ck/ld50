@@ -17,6 +17,10 @@ public class Tongue : MonoBehaviour
     [SerializeField] private Ease tongueFlickeExtendEase;
     [SerializeField] private Ease tongueFlickeRetreatEase;
 
+    [SerializeField] private int starMaxDepth;
+    [SerializeField] private float starRadius;
+    [SerializeField] private int starPointyNum;
+
     private TweenerCore<Vector3, Vector3, VectorOptions> extendTween;
     private Sequence sequence;
     private Action<List<Enemy>> onExtendCompleted;
@@ -26,7 +30,7 @@ public class Tongue : MonoBehaviour
     private List<Enemy> enemies = new List<Enemy>();
     private int depth;
     private TongueUpType type;
-    private bool startedExtraExtend;
+    private int startedExtraExtend = 0;
 
     [Header("ChainTongue")]
     [SerializeField] private float chainRange;
@@ -34,7 +38,8 @@ public class Tongue : MonoBehaviour
 
     void Update()
     {
-        if(startedExtraExtend) return;
+        if(startedExtraExtend > 0) return;
+        if(enemies.Count > 0) return;
         var hitInsects = Physics.OverlapSphere(tongueCollider.transform.position, tongueColliderRadius, insectMask);
         if(hitInsects.Length > 0)
         {
@@ -48,58 +53,78 @@ public class Tongue : MonoBehaviour
                     enemy.Hit();
                     enemy.transform.SetParent(tongueCollider);
 
-                    if(!startedExtraExtend && type != TongueUpType.Nothing && depth > 0)
+                    if(startedExtraExtend == 0 && type != TongueUpType.Nothing && depth > 0)
                     {
-                        sequence.Kill();
-                        //ExtendFrom(tongueCollider.transform.position, Vector3.left);
                         switch (type) {
                             case TongueUpType.Chain:
-                                var tongue = Instantiate(tonguePrefab);
-
-                                var newDepth = depth - 1;
-                                Debug.Log("NewDepth: " + newDepth);
-                                var enemiesInRange = Physics.OverlapSphere(tongueCollider.transform.position, chainRange, insectMask);
-                                Debug.Log("EnemiesInRange: " + enemiesInRange.Length);
-                                if(enemiesInRange.Length > 0) {
-                                    GameObject closestEnemy = null;
-                                    foreach(Collider checkEnemy in enemiesInRange) {
-                                        if(!checkEnemy.gameObject.GetComponent<Enemy>().isHit) {
-                                            if(closestEnemy == null) {
-                                                closestEnemy = checkEnemy.gameObject;
-                                            } else { 
-                                                if(Vector3.Distance(checkEnemy.transform.position, tongueCollider.transform.position) < Vector3.Distance(closestEnemy.transform.position, tongueCollider.transform.position)) {
-                                                    closestEnemy = checkEnemy.gameObject;
-                                                    Debug.Log("New closest enemy");
-                                                }
-                                            }
-                                        }
-                                    }
-                                    if(closestEnemy != null) {
-                                        Debug.Log("Closest enemy: " + closestEnemy);
-                                        tongue.ExtendFrom(tongueCollider.position, closestEnemy.transform.position, type, newDepth, OnExtendCompleted, tonguePrefab);
-                                        startedExtraExtend = true;
-                                    }
-                                }
+                                DoExtendChain();
                                 break;
-
                             case TongueUpType.Star:
-
+                                sequence.Kill();
+                                DoExtendStar();
                                 break;
                             default:
-
+                                var tongue = Instantiate(tonguePrefab);
+                                var newDepth = depth - 1;
+                                tongue.ExtendFrom(tongueCollider.position, tongueCollider.position + Vector3.up * 1f, type, newDepth, OnExtendCompleted, tonguePrefab);
+                                startedExtraExtend = 1;
                                 break;
                         }
-
-                        // chain
-                        // overlap sphere
-                        // take the first one that is not in hitInsects or myself OR enemies
-                        // then extend to that insect
                     }
-                    else
-                    {
-                        //
+                    break;
+                }
+            }
+        }
+    }
+
+    private void DoExtendStar()
+    {
+        float step = (Mathf.PI * 2.0f) / starPointyNum;
+
+        var newDepth = depth - 1;
+        for(int i = 0; i < starPointyNum; i++)
+        {
+            var a = step * i;
+            var x = starRadius/(starMaxDepth - depth) * Mathf.Cos(a);
+            var y = starRadius/(starMaxDepth - depth) * Mathf.Sin(a);
+            var target = tongueCollider.position + new Vector3(x, y, 0);
+
+            var tongue = Instantiate(tonguePrefab);
+            tongue.ExtendFrom(tongueCollider.position, target, TongueUpType.Star, newDepth, OnExtendCompleted, tonguePrefab);
+        }
+        startedExtraExtend = starPointyNum;
+    }
+
+    private void DoExtendChain() {
+
+        var newDepth = depth - 1;
+        Debug.Log("NewDepth: " + newDepth);
+        var enemiesInRange = Physics.OverlapSphere(tongueCollider.transform.position, chainRange, insectMask);
+        Debug.Log("EnemiesInRange: " + enemiesInRange.Length);
+        if(enemiesInRange.Length > 0) {
+            
+            GameObject closestEnemy = null;
+            foreach(Collider checkEnemy in enemiesInRange) {
+                if(!checkEnemy.gameObject.GetComponent<Enemy>().isHit) {
+                    
+                    if(closestEnemy == null) {
+                        closestEnemy = checkEnemy.gameObject;
+                    } else {
+                        float distance = Vector3.Distance(checkEnemy.transform.position, tongueCollider.transform.position);
+
+                        if(distance < Vector3.Distance(closestEnemy.transform.position, tongueCollider.transform.position)) {
+                            closestEnemy = checkEnemy.gameObject;
+                            Debug.Log("New closest enemy: " + distance);
+                        }
                     }
                 }
+            }
+            if(closestEnemy != null) {
+                sequence.Kill();
+                Debug.Log("Closest enemy: " + closestEnemy);
+                var tongue = Instantiate(tonguePrefab);
+                tongue.ExtendFrom(tongueCollider.position, closestEnemy.transform.position, type, newDepth, OnExtendCompleted, tonguePrefab);
+                startedExtraExtend = 1;
             }
         }
     }
@@ -146,19 +171,21 @@ public class Tongue : MonoBehaviour
 
     private void OnExtendCompleted(List<Enemy> enemies)
     {
+        startedExtraExtend -= 1;
         foreach(var enemy in enemies)
         {
             enemy.transform.SetParent(tongueCollider);
             this.enemies.Add(enemy);
         }
 
-        // RÜCKWEG
-
-        var retreatTime = CalcAnimTime(tongueCollider.position, origin, tongueRetreatSpeed);
-        DOTween.To(() => tongue.GetPosition(1), x => SetTongueTip(x), origin, retreatTime).SetEase(tongueFlickeRetreatEase).OnComplete(() => {
-            onExtendCompleted(enemies);
-            Destroy(gameObject);
-        });
-
+        if(startedExtraExtend == 0)
+        {
+            // RÜCKWEG
+            var retreatTime = CalcAnimTime(tongueCollider.position, origin, tongueRetreatSpeed);
+            DOTween.To(() => tongue.GetPosition(1), x => SetTongueTip(x), origin, retreatTime).SetEase(tongueFlickeRetreatEase).OnComplete(() => {
+                onExtendCompleted(enemies);
+                Destroy(gameObject);
+            });
+        }
     }
 }

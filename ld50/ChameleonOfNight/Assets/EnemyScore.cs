@@ -29,8 +29,8 @@ public class EnemyScore : MonoBehaviour
         transform.parent = null;
         gameObject.SetActive(true);
 
+        Highscore.Instance.AddScore(score);
         var sequence = DOTween.Sequence();
-
         sequence.Append(transform.DOLocalMoveY(transform.localPosition.y + riseHeight, 1f).SetEase(Ease.OutSine));
         //sequence.Join(transform)
         sequence.OnComplete(() => Destroy(gameObject));
