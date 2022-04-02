@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     bool sucking = true;
     Vector3 lastPos;
     TweenerCore<Vector3, Vector3, VectorOptions> currentMover;
-    bool isHit = false;
+    public bool isHit { get; private set;} = false;
 
 
     public void SetTarget (GameObject target) {
@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
         lastPos = transform.position;
     }
 
-    public void Hit(Transform tongueTip, float delay)
+    public void Hit()
     {
         if(isHit) return;
         // TODO DEATH ANIMATION
@@ -39,13 +39,10 @@ public class Enemy : MonoBehaviour
 
         OnEnemyKill.Invoke();
         isHit = true;
-        transform.SetParent(tongueTip);
-        StartCoroutine(DelayDestroy(delay));
     }
 
-    private IEnumerator DelayDestroy(float delay)
+    public void RealDestroy()
     {
-        yield return new WaitForSeconds(delay);
         Destroy(gameObject);
     }
 

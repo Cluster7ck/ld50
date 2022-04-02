@@ -7,10 +7,10 @@ public class FlySpawner : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject enemyTarget;
     [SerializeField] private int _enemyPotential;
-    [SerializeField] private int _enemySpawnRate;
+    [SerializeField] private float _enemySpawnRate;
     [SerializeField] private List<SpawnZone> spawnZones;
 
-    private double _timeSinceLastSpawn;
+    private float _timeSinceLastSpawn;
     private int _enemiesSpawned;
 
 
