@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 792.1904, g: 671.68774, b: 592.0176, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3894,6 +3894,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &958707232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 958707234}
+  - component: {fileID: 958707233}
+  m_Layer: 10
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &958707233
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958707232}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &958707234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958707232}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.138, y: -0.028, z: -1.736}
+  m_LocalScale: {x: 5.9753, y: 1, z: 7.212}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &961646057
 GameObject:
   m_ObjectHideFlags: 0
@@ -11551,6 +11595,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 887166130125686764, guid: af794d894bd5b2a4a83d401ba822d8bd, type: 3}
+      propertyPath: tongueFlickExtendTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 887166130125686764, guid: af794d894bd5b2a4a83d401ba822d8bd, type: 3}
+      propertyPath: tongueFlickRetreatTime
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 887166130125686764, guid: af794d894bd5b2a4a83d401ba822d8bd, type: 3}
+      propertyPath: tongueFlickeExtendEase
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 887166130125686764, guid: af794d894bd5b2a4a83d401ba822d8bd, type: 3}
+      propertyPath: tongueFlickeRetreatEase
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 887166130125686765, guid: af794d894bd5b2a4a83d401ba822d8bd, type: 3}
       propertyPath: m_Name
       value: ChameleonController
@@ -11665,6 +11725,10 @@ PrefabInstance:
       propertyPath: chameleonController
       value: 
       objectReference: {fileID: 1313478433}
+    - target: {fileID: 2822561396757080886, guid: c35743e98166df3478bc838c3c603757, type: 3}
+      propertyPath: insectPlaneLayer.m_Bits
+      value: 9216
+      objectReference: {fileID: 0}
     - target: {fileID: 2822561396757080887, guid: c35743e98166df3478bc838c3c603757, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -11718,6 +11782,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1821451200}
     m_Modifications:
+    - target: {fileID: 3000524393225805470, guid: 4f699647e46f5b941b976d9a1beba4cc, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 3413977195110685305, guid: 4f699647e46f5b941b976d9a1beba4cc, type: 3}
       propertyPath: m_Name
       value: Ball_PF
@@ -11766,7 +11834,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2301229173843524623, guid: 4f699647e46f5b941b976d9a1beba4cc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4f699647e46f5b941b976d9a1beba4cc, type: 3}
 --- !u!1 &3803442147378894685 stripped
 GameObject:

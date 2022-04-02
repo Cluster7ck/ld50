@@ -23,7 +23,8 @@ public class TongueCollider : MonoBehaviour
             {
                 var enemy = insectCollider.GetComponent<Enemy>();
                 // hit enemy
-                enemy.Hit();
+                if(enemy)
+                    enemy.Hit(transform, 0.4f);
             }
         }
     }

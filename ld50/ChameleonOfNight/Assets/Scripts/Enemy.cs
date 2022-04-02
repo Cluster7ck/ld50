@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     bool reached = false;
     Vector3 lastPos;
     TweenerCore<Vector3, Vector3, VectorOptions> currentMover;
+    bool isHit = false;
 
 
     public void SetTarget (GameObject target) {
@@ -24,8 +25,19 @@ public class Enemy : MonoBehaviour
         //transform.DOPath(JitterPath(target.transform.position), _flightTime);
     }
 
-    public void Hit()
+    public void Hit(Transform tongueTip, float delay)
     {
+        if(isHit) return;
+        // TODO DEATH ANIMATION
+
+        isHit = true;
+        transform.SetParent(tongueTip);
+        StartCoroutine(DelayDestroy(delay));
+    }
+
+    private IEnumerator DelayDestroy(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         Destroy(gameObject);
     }
 
