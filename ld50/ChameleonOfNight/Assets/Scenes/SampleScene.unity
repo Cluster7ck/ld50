@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 792.1904, g: 671.68774, b: 592.0176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6719,11 +6719,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 54649104014852006, guid: d09a3c2480b6a1649b0fd568f94f3f74, type: 3}
       propertyPath: _enemySpawnRate
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 54649104014852006, guid: d09a3c2480b6a1649b0fd568f94f3f74, type: 3}
       propertyPath: spawnRateSlowdowner
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 54649104014852006, guid: d09a3c2480b6a1649b0fd568f94f3f74, type: 3}
+      propertyPath: _chanceToCarryTongueUp
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 54649104014852006, guid: d09a3c2480b6a1649b0fd568f94f3f74, type: 3}
       propertyPath: spawnZones.Array.data[0]
@@ -11930,6 +11934,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 887166130125686764, guid: af794d894bd5b2a4a83d401ba822d8bd, type: 3}
+      propertyPath: depth
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 887166130125686764, guid: af794d894bd5b2a4a83d401ba822d8bd, type: 3}
       propertyPath: sphereCollider
       value: 

@@ -22,6 +22,7 @@ public class ChameleonController : MonoBehaviour
 
     [SerializeField] private Tongue tonguePrefab;
     [SerializeField] private Transform tongueOrigin;
+    [SerializeField] private int depth;
 
     public TongueUpType type;
     private float restTimePowerUp;
@@ -43,7 +44,7 @@ public class ChameleonController : MonoBehaviour
         {
             SetPowerUp(TongueUpType.Chain, 10);
         }
-        if(Input.GetKeyDown(KeyCode.Alpha2))
+        if(Input.GetKeyDown(KeyCode.Alpha3))
         {
             SetPowerUp(TongueUpType.Star, 10);
         }
@@ -68,7 +69,7 @@ public class ChameleonController : MonoBehaviour
     {
         if(currentlyExtending) return;
         activeTongue = Instantiate(tonguePrefab);
-        activeTongue.ExtendFrom(tongueOrigin.position, worldPos, type, 4, OnExtendCompleted, tonguePrefab);
+        activeTongue.ExtendFrom(tongueOrigin.position, worldPos, type, depth, OnExtendCompleted, tonguePrefab);
         currentlyExtending = true;
     }
 

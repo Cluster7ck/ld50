@@ -37,7 +37,6 @@ public class FlySpawner : MonoBehaviour
     [SerializeField] private GameObject enemyTarget;
     [SerializeField] private float _enemySpawnRate;
     [SerializeField] private float _chanceToCarryTongueUp;
-    [SerializeField] private float spawnRateSlowdowner;
     [SerializeField] private List<SpawnZone> spawnZones;
 
     private float nextEnemyTime;
@@ -49,7 +48,7 @@ public class FlySpawner : MonoBehaviour
     void Start()
     {
         Highscore.Instance.OnHighscore.AddListener(OnHighscore);
-        nextEnemyTime = _enemySpawnRate;
+        nextEnemyTime = GetSpawnRate();
     }
 
 
@@ -79,8 +78,13 @@ public class FlySpawner : MonoBehaviour
         }
         _enemiesSpawned++;
         _timeSinceLastSpawn = 0;
+        nextEnemyTime = GetSpawnRate();
+    }
+
+    private float GetSpawnRate()
+    {
         var spawnRate = 1.0f / (Mathf.Clamp(Mathf.RoundToInt(Time.timeSinceLevelLoad/60), 1, int.MaxValue));
-        nextEnemyTime = Helper.RandomGaussian(spawnRate * 0.8f, spawnRate * 1.2f);
+        return Helper.RandomGaussian(spawnRate * 0.8f, spawnRate * 1.2f) * _enemySpawnRate;
     }
 
     private Vector3 SpawnPosition() {
