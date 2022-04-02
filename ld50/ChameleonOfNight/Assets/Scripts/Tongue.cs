@@ -107,7 +107,6 @@ public class Tongue : MonoBehaviour
 
     public void ExtendFrom(Vector3 origin, Func<Vector3> target, TongueUpType type, int depth, Action<List<Enemy>> onExtendCompleted, Tongue tonguePrefab)
     {
-        Debug.Log($"New extend from: {origin} to: {target()}");
         this.tonguePrefab = tonguePrefab;
         this.origin = origin;
         this.depth = depth;
