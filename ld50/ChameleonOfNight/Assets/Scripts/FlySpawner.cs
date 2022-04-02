@@ -32,7 +32,7 @@ public class FlySpawner : MonoBehaviour
     }
 
     private void SpawnEnemy() {
-        GameObject newEnemy = Instantiate(enemyPrefab, SpawnPosition(), Quaternion.Euler(90, 0, 0));
+        GameObject newEnemy = Instantiate(enemyPrefab, SpawnPosition(), Quaternion.identity);
         newEnemy.GetComponent<Enemy>().SetTarget(enemyTarget);
         _enemiesSpawned++;
         _timeSinceLastSpawn = 0;
