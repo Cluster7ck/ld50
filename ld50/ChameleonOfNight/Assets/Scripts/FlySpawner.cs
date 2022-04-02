@@ -5,8 +5,10 @@ using UnityEngine;
 public class FlySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject enemyTarget;
     [SerializeField] private int _enemyPotential;
     [SerializeField] private int _enemySpawnRate;
+    [SerializeField] private List<SpawnZone> spawnZones;
 
     private double _timeSinceLastSpawn;
     private int _enemiesSpawned;
@@ -30,8 +32,15 @@ public class FlySpawner : MonoBehaviour
     }
 
     private void SpawnEnemy() {
-        Instantiate(enemyPrefab);
+        GameObject newEnemy = Instantiate(enemyPrefab, SpawnPosition(), Quaternion.Euler(90, 0, 0));
+        newEnemy.GetComponent<Enemy>().SetTarget(enemyTarget);
         _enemiesSpawned++;
         _timeSinceLastSpawn = 0;
+    }
+
+    private Vector3 SpawnPosition() {
+        Vector3 pos;
+        pos = spawnZones[Random.Range(0, spawnZones.Count)].GetSpawnPosition();
+        return pos;
     }
 }
