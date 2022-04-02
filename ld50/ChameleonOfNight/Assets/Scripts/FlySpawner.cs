@@ -36,6 +36,7 @@ public class FlySpawner : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject enemyTarget;
     [SerializeField] private float _enemySpawnRate;
+    [SerializeField] private float _chanceToCarryTongueUp;
     [SerializeField] private float spawnRateSlowdowner;
     [SerializeField] private List<SpawnZone> spawnZones;
 
@@ -68,7 +69,14 @@ public class FlySpawner : MonoBehaviour
 
     private void SpawnEnemy() {
         GameObject newEnemy = Instantiate(enemyPrefab, SpawnPosition(), Quaternion.identity);
-        newEnemy.GetComponent<Enemy>().SetTarget(enemyTarget);
+        Enemy enemy = newEnemy.GetComponent<Enemy>();
+        enemy.SetTarget(enemyTarget);
+        
+        if(Random.Range(0f, 1f) < _chanceToCarryTongueUp) {
+            enemy.SetTongueUp(TongueUpType.Chain);
+        } else {
+            enemy.SetTongueUp(TongueUpType.Nothing);
+        }
         _enemiesSpawned++;
         _timeSinceLastSpawn = 0;
         var spawnRate = 1.0f / (Mathf.Clamp(Mathf.RoundToInt(Time.timeSinceLevelLoad/60), 1, int.MaxValue));

@@ -22,8 +22,8 @@ public class ChameleonController : MonoBehaviour
 
     [SerializeField] private Tongue tonguePrefab;
     [SerializeField] private Transform tongueOrigin;
+
     public TongueUpType type;
-    
     private float restTimePowerUp;
     private Tongue activeTongue;
     private bool currentlyExtending;
@@ -74,10 +74,15 @@ public class ChameleonController : MonoBehaviour
 
     private void OnExtendCompleted(List<Enemy> enemies)
     {
-        //foreach(var enemy in enemies)
-        //{
-        //    enemy.RealDestroy();
-        //}
+        if(type == TongueUpType.Nothing) {
+            foreach(var enemy in enemies) {
+                if(enemy.GetComponent<Enemy>().HeldTongueUp != TongueUpType.Nothing) {
+                    SetPowerUp(enemy.GetComponent<Enemy>().HeldTongueUp);
+                    break;
+                }
+            }
+        }
+        
         currentlyExtending = false;
         Destroy(activeTongue.gameObject);
     }

@@ -32,6 +32,10 @@ public class Tongue : MonoBehaviour
     private TongueUpType type;
     private int startedExtraExtend = 0;
 
+    [Header("ChainTongue")]
+    [SerializeField] private float chainRange;
+
+
     void Update()
     {
         if(startedExtraExtend > 0) return;
@@ -51,30 +55,20 @@ public class Tongue : MonoBehaviour
 
                     if(startedExtraExtend == 0 && type != TongueUpType.Nothing && depth > 0)
                     {
-                        sequence.Kill();
-
-                        // chain
-                        // overlap sphere
-                        // take the first one that is not in hitInsects or myself OR enemies
-                        // then extend to that insect
-
-                        if(type == TongueUpType.Star)
-                        {
-                            DoExtendStar();
+                        switch (type) {
+                            case TongueUpType.Chain:
+                                DoExtendChain();
+                                break;
+                            case TongueUpType.Star:
+                                DoExtendStar();
+                                break;
+                            default:
+                                var tongue = Instantiate(tonguePrefab);
+                                var newDepth = depth - 1;
+                                tongue.ExtendFrom(tongueCollider.position, tongueCollider.position + Vector3.up * 1f, type, newDepth, OnExtendCompleted, tonguePrefab);
+                                startedExtraExtend = 1;
+                                break;
                         }
-                        else
-                        {
-                            //ExtendFrom(tongueCollider.transform.position, Vector3.left);
-                            var tongue = Instantiate(tonguePrefab);
-
-                            var newDepth = depth - 1;
-                            tongue.ExtendFrom(tongueCollider.position, tongueCollider.position + Vector3.up * 1f, type, newDepth, OnExtendCompleted, tonguePrefab);
-                            startedExtraExtend = 1;
-                        }
-                    }
-                    else
-                    {
-                        //
                     }
                     break;
                 }
@@ -84,6 +78,7 @@ public class Tongue : MonoBehaviour
 
     private void DoExtendStar()
     {
+        sequence.Kill();
         float step = (Mathf.PI * 2.0f) / starPointyNum;
 
         var newDepth = depth - 1;
@@ -98,6 +93,40 @@ public class Tongue : MonoBehaviour
             tongue.ExtendFrom(tongueCollider.position, target, TongueUpType.Star, newDepth, OnExtendCompleted, tonguePrefab);
         }
         startedExtraExtend = starPointyNum;
+    }
+
+    private void DoExtendChain() {
+
+        var newDepth = depth - 1;
+        Debug.Log("NewDepth: " + newDepth);
+        var enemiesInRange = Physics.OverlapSphere(tongueCollider.transform.position, chainRange, insectMask);
+        Debug.Log("EnemiesInRange: " + enemiesInRange.Length);
+        if(enemiesInRange.Length > 0) {
+            
+            GameObject closestEnemy = null;
+            foreach(Collider checkEnemy in enemiesInRange) {
+                if(!checkEnemy.gameObject.GetComponent<Enemy>().isHit) {
+                    
+                    if(closestEnemy == null) {
+                        closestEnemy = checkEnemy.gameObject;
+                    } else {
+                        float distance = Vector3.Distance(checkEnemy.transform.position, tongueCollider.transform.position);
+
+                        if(distance < Vector3.Distance(closestEnemy.transform.position, tongueCollider.transform.position)) {
+                            closestEnemy = checkEnemy.gameObject;
+                            Debug.Log("New closest enemy: " + distance);
+                        }
+                    }
+                }
+            }
+            if(closestEnemy != null) {
+                sequence.Kill();
+                Debug.Log("Closest enemy: " + closestEnemy);
+                var tongue = Instantiate(tonguePrefab);
+                tongue.ExtendFrom(tongueCollider.position, closestEnemy.transform.position, type, newDepth, OnExtendCompleted, tonguePrefab);
+                startedExtraExtend = 1;
+            }
+        }
     }
 
     public void ExtendFrom(Vector3 origin, Vector3 target, TongueUpType type, int depth, Action<List<Enemy>> onExtendCompleted, Tongue tonguePrefab)

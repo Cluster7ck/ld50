@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour
     TweenerCore<Vector3, Vector3, VectorOptions> currentMover;
     public bool isHit { get; private set;} = false;
 
+    //TongueUp
+    private TongueUpType _heldTongueUp;
 
     public void SetTarget (GameObject target) {
         _flyTarget = target.transform.position;
@@ -124,15 +126,22 @@ public class Enemy : MonoBehaviour
         return _path.ToArray();
     }
 
-    //private Vector3[] flightPath() {
-    //    Vector3[] _path = new Vector3[_flightDirectionChanges];
-    //    float distanceToTarget = (transform.position - _flyTarget.transform.position).magnitude;
-    //    _path[0] = transform.position;
-    //    for(int i = 1; i < _flightDirectionChanges; i++) {
-    //        Vector3 targetDirection = _path[i-1] - _flyTarget.transform.position;
-    //        Vector3 newWaypoint = targetDirection * (distanceToTarget/(_flightDirectionChanges*i)); // waypoint calculated, so that distance covered is relative to distance to target left
-    //        _path[i] = newWaypoint;
-    //    }
-    //    return _path;
-    //}
+    public TongueUpType HeldTongueUp {
+        get { return _heldTongueUp; }
+
+    }
+
+    public void SetTongueUp(TongueUpType type) {
+        _heldTongueUp = type;
+        switch (_heldTongueUp) {
+            case TongueUpType.Nothing:
+                break;
+            case TongueUpType.Chain:
+                transform.GetComponentInChildren<SpriteRenderer>().color = new Color(1, 0, 0);
+                break;
+            case TongueUpType.Star:
+                transform.GetComponentInChildren<SpriteRenderer>().color = new Color(0, 1, 0);
+                break;
+        }
+    }
 }
