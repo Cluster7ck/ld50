@@ -228,7 +228,4 @@ MonoBehaviour:
   tongueRetreatSpeed: 14
   tongueFlickeExtendEase: 15
   tongueFlickeRetreatEase: 17
-  starMaxDepth: 5
-  starRadius: 1
-  starPointyNum: 7
-  chainRange: 3
+  splashParticleSystemPrefab: {fileID: 4922966971045609723, guid: 3383823cf9cd2e34ab071ed64d8dba10, type: 3}

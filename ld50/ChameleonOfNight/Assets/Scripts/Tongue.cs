@@ -17,6 +17,8 @@ public class Tongue : MonoBehaviour
     [SerializeField] private Ease tongueFlickeExtendEase;
     [SerializeField] private Ease tongueFlickeRetreatEase;
 
+    [SerializeField] private GameObject splashParticleSystemPrefab;
+
     private TweenerCore<Vector3, Vector3, VectorOptions> extendTween;
     private Sequence sequence;
     private Action<List<Enemy>> onExtendCompleted;
@@ -44,6 +46,7 @@ public class Tongue : MonoBehaviour
                     enemies.Add(enemy);
                     enemy.Hit();
                     enemy.transform.SetParent(tongueCollider);
+                    GameObject splash = Instantiate(splashParticleSystemPrefab, tongueCollider.transform.position, Quaternion.identity);
 
                     if(depth > 0)
                     {
