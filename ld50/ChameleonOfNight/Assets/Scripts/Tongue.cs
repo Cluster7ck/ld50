@@ -68,6 +68,17 @@ public class Tongue : MonoBehaviour
                     {
                         DoExtendStar();
                     }
+                    else
+                    {
+                        sequence.Kill();
+                        var retreatTime = CalcAnimTime(origin, tongueCollider.position, GetRetreatSpeed());
+                        DOTween.To(() => tongue.GetPosition(1), x => SetTongueTip(x), origin, retreatTime)
+                            .SetEase(tongueFlickeRetreatEase)
+                            .OnComplete(() => {
+                                onExtendCompleted(enemies);
+                                Destroy(gameObject);
+                            });
+                    }
                     break;
                 }
             }

@@ -54,7 +54,8 @@ public class Highscore : MonoBehaviour
                 Debug.Log(option);
             }
             options[1].onSelected();
-            SetXp(0);
+            currentXp = 0;
+            SetXp(currentXp);
             SetPlayerLevel(playerLevel + 1);
         }
     }
