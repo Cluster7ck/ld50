@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject normalEnemy;
+    [SerializeField] private List<GameObject> normalEnemyPrefabs;
     [SerializeField] private float enemySpawnRate;
     [SerializeField] private GameObject illuminatedEnemy;
     [SerializeField] private float illuminatedEnemyBaseSpawnChance;
@@ -70,7 +70,8 @@ public class FlySpawner : MonoBehaviour
         if(Random.Range(0f, 1f) < illuminatedEnemyBaseSpawnChance) {
             newEnemy = Instantiate(illuminatedEnemy, SpawnPosition(), Quaternion.identity);
         } else {
-            newEnemy = Instantiate(normalEnemy, SpawnPosition(), Quaternion.identity);
+            int rng = Random.Range(0, normalEnemyPrefabs.Count);
+            newEnemy = Instantiate(normalEnemyPrefabs[rng], SpawnPosition(), Quaternion.identity);
         }
         Fly enemy = newEnemy.GetComponent<Fly>();
         enemy.Init(enemyTarget, this);

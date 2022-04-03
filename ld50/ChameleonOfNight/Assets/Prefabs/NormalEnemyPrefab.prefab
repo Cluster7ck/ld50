@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4103cdf6b01bc6e478d3c29a9641b02c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 32824f24051aea146ae44406c76a66f2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,7 +106,7 @@ Animator:
   m_GameObject: {fileID: 1004899163051450494}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5cccd37f1fdeca340876d4f28beef8c7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6f230fed38d75ce40832384883018188, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3ce7015e37e2b94da0d1b4718ec3ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreValue: 10
+  scoreValue: 20
   _flightTime: 10
   _flightDirectionChanges: 10
   pullToTarget: 0.6
