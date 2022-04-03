@@ -8,6 +8,7 @@ public class StartTheGame : MonoBehaviour
     [SerializeField] private StartKill startKill;
     [SerializeField] private SleepyBoy sleepyBoy;
     [SerializeField] private GameObject levelXpUi;
+    [SerializeField] private Credits credits;
 
     public void Awake()
     {
@@ -26,11 +27,13 @@ public class StartTheGame : MonoBehaviour
         levelXpUi.SetActive(false);
 
         startKill.gameObject.SetActive(true);
+        credits.Appear();
     }
 
     void StartIt()
     {
         spawner.StartSpawning();
         levelXpUi.SetActive(true);
+        credits.Disappear();
     }
 }
