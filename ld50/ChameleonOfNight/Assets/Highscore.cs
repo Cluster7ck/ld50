@@ -18,6 +18,7 @@ public class Highscore : MonoBehaviour
 
     [SerializeField] private TMPro.TMP_Text xpText;
     [SerializeField] private TMPro.TMP_Text levelText;
+    [SerializeField] private RectTransform progressBar;
 
     [SerializeField] private GameObject levelUpScreen;
 
@@ -41,6 +42,8 @@ public class Highscore : MonoBehaviour
     private int playerLevel = 1;
     private int currentXp = 0;
     private int lastXp = 0;
+
+    Tween xpBarTween;
 
     private void Awake()
     {
@@ -71,6 +74,7 @@ public class Highscore : MonoBehaviour
         lastXp = current;
 
         xpText.text = $"XP {current.ToString()}";
+
         OnHighscore.Invoke(current);
 
         if(current >= GetXpForLevelUp())
@@ -84,6 +88,15 @@ public class Highscore : MonoBehaviour
             SetXp(currentXp);
             SetPlayerLevel(playerLevel + 1);
         }
+        SetProgressBar(currentXp);
+    }
+
+    private void SetProgressBar(int currentXp) {
+        float current = currentXp;
+        float forLevelUp = GetXpForLevelUp();
+        float newXPos = -progressBar.rect.width + ((current / forLevelUp) * progressBar.rect.width);
+        xpBarTween.Kill();
+        xpBarTween = progressBar.DOAnchorPos3DX(newXPos, 0.5f);
     }
 
     private void OpenLevelScreen(List<UpgradeOption> options)
