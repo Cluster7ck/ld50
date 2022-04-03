@@ -1319,6 +1319,12 @@ MonoBehaviour:
   munch1: {fileID: 8300000, guid: 9d0c504f51bfcaa44bec0deb0351a690, type: 3}
   munch2: {fileID: 8300000, guid: 8a0eff85ce699d044bd588a9d2d82592, type: 3}
   slurp: {fileID: 8300000, guid: f13adcedd7bc2e343becddadeda0b14c, type: 3}
+  hitSounds:
+  - {fileID: 8300000, guid: 4b7f96fe77b1e954b88f6b460d594107, type: 3}
+  - {fileID: 8300000, guid: 56acb3e5b4ea3984a9e3c612c045bb33, type: 3}
+  - {fileID: 8300000, guid: 5545a247c26d7d34d9a25a77957d0f1b, type: 3}
+  - {fileID: 8300000, guid: 2e443e673732ac54f9f1087a64fb4ab5, type: 3}
+  - {fileID: 8300000, guid: d485d099ee2869f46b39e921e169c67a, type: 3}
   splatCooldown: 0.2
 --- !u!4 &203697940
 Transform:
@@ -20965,7 +20971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6442619107246415104, guid: bd999f49aac74f844980d7734dd37923, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -86
+      value: -31
       objectReference: {fileID: 0}
     - target: {fileID: 6442619107246415104, guid: bd999f49aac74f844980d7734dd37923, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -20985,7 +20991,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6442619107246415107, guid: bd999f49aac74f844980d7734dd37923, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6442619107246415105, guid: bd999f49aac74f844980d7734dd37923, type: 3}
