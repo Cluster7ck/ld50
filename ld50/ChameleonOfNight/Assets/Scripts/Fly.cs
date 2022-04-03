@@ -22,6 +22,7 @@ public class Fly : Enemy
     private FlySpawner flySpawner;
 
     public void Init (GameObject target, FlySpawner flySpawner) {
+        this.flySpawner = flySpawner;
         _flyTarget = target.transform.position;
         lastPos = transform.position;
     }

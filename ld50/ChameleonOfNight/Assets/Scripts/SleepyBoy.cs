@@ -15,6 +15,8 @@ public class SleepyBoy : MonoBehaviour
 
     [SerializeField] private float drainSpeed;
     [SerializeField] private float regenSpeed;
+    [SerializeField] private Animator animator;
+
     public float maxHitPoints;
     public float hitPoints;
     private int suckers;
@@ -42,6 +44,7 @@ public class SleepyBoy : MonoBehaviour
         if(suckers > 0)
         {
             hitPoints -= drainSpeed * suckers * Time.deltaTime;
+
         }
         else if(hitPoints < maxHitPoints)
         {
@@ -57,12 +60,17 @@ public class SleepyBoy : MonoBehaviour
 
     public void Suck()
     {
-        Debug.Log("Sucker");
         suckers++;
+
+        animator.SetTrigger("twitch");
     }
     public void DeSuck()
     {
         suckers--;
+        if(suckers == 0)
+        {
+            animator.SetTrigger("rest");
+        }
     }
 
 }

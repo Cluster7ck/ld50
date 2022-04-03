@@ -36,7 +36,7 @@ public class FlySpawner : MonoBehaviour
         nextEnemyTime = GetSpawnRate();
     }
 
-    public async void Reset()
+    public void Reset()
     {
         shouldSpawn = false;
         for(int i = liveEnemies.Count - 1; i >= 0; i--)

@@ -99,7 +99,7 @@ public class Highscore : MonoBehaviour
     {
         ButtonAnimation(button.gameObject);
         image.sprite = option.sprite;
-        //text.text = option.text;
+        text.text = option.text;
         button.onClick.AddListener(() => OnButtonClicked(option));
         button.onClick.AddListener(CloseLevelScreen);
     }

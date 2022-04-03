@@ -60,10 +60,12 @@ public class ChameleonController : MonoBehaviour
         jawHinge.DORotate(Vector3.zero, jawSpeed).SetEase(jawDownEase);
         headHinge.DORotate(Vector3.zero, headSpeed).SetEase(jawDownEase);
 
-        foreach(var enemy in enemies)
+        for (int i = enemies.Count - 1; i >= 0; i--)
         {
+            Enemy enemy = enemies[i];
             enemy.RealDestroy();
         }
+        enemies.Clear();
 
         Destroy(activeTongue.gameObject);
     }
