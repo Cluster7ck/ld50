@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class FlySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject normalEnemy;
+    [SerializeField] private float enemySpawnRate;
+    [SerializeField] private GameObject illuminatedEnemy;
+    [SerializeField] private float illuminatedEnemyBaseSpawnChance;
+    [SerializeField] private float illuminatedEnemySpawnChanceIncrease;
+
     [SerializeField] private GameObject enemyTarget;
-    [SerializeField] private float _enemySpawnRate;
-    [SerializeField] private float _chanceToCarryTongueUp;
+    [SerializeField] private float chanceToCarryExtra;
     [SerializeField] private List<SpawnZone> spawnZones;
 
     private float nextEnemyTime;
@@ -27,6 +31,7 @@ public class FlySpawner : MonoBehaviour
     public void OnHighscore(int highScore)
     {
         // remap highscore to higher spawn rate and stuff
+        Debug.Log("Highscore: " + highScore);
     }
 
     // Update is called once per frame
@@ -40,14 +45,17 @@ public class FlySpawner : MonoBehaviour
     }
 
     private void SpawnEnemy() {
-        GameObject newEnemy = Instantiate(enemyPrefab, SpawnPosition(), Quaternion.identity);
+        GameObject newEnemy;
+        if(Random.Range(0f, 1f) < illuminatedEnemyBaseSpawnChance) {
+            newEnemy = Instantiate(illuminatedEnemy, SpawnPosition(), Quaternion.identity);
+        } else {
+            newEnemy = Instantiate(normalEnemy, SpawnPosition(), Quaternion.identity);
+        }
         Enemy enemy = newEnemy.GetComponent<Enemy>();
         enemy.SetTarget(enemyTarget);
         
-        if(Random.Range(0f, 1f) < _chanceToCarryTongueUp) {
-            enemy.SetTongueUp(TongueUpType.Chain);
-        } else {
-            enemy.SetTongueUp(TongueUpType.Nothing);
+        if(Random.Range(0f, 1f) < chanceToCarryExtra) {
+            Debug.Log("Extra should be spawned");
         }
         _enemiesSpawned++;
         _timeSinceLastSpawn = 0;
@@ -57,7 +65,7 @@ public class FlySpawner : MonoBehaviour
     private float GetSpawnRate()
     {
         var spawnRate = 1.0f / (Mathf.Clamp(Mathf.RoundToInt(Time.timeSinceLevelLoad/60), 1, int.MaxValue));
-        return Helper.RandomGaussian(spawnRate * 0.8f, spawnRate * 1.2f) * _enemySpawnRate;
+        return Helper.RandomGaussian(spawnRate * 0.8f, spawnRate * 1.2f) * enemySpawnRate;
     }
 
     private Vector3 SpawnPosition() {

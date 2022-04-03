@@ -43,11 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61f00d17c9eb472478129532f5be540a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5805448201070011187, guid: 93f9b1bb14f209b4fa4f136a45a29000, type: 3}
+  normalEnemy: {fileID: 5805448201070011187, guid: 93f9b1bb14f209b4fa4f136a45a29000, type: 3}
+  enemySpawnRate: 1
+  illuminatedEnemy: {fileID: 5805448201070011187, guid: c91efa7b469a7a5469deb2864ff33d86, type: 3}
+  illuminatedEnemyBaseSpawnChance: 0.02
+  illuminatedEnemySpawnChanceIncrease: 0.02
   enemyTarget: {fileID: 0}
-  _enemyPotential: 10
-  _enemySpawnRate: 2
+  chanceToCarryExtra: 0
   spawnZones:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  shouldSpawn: 1
