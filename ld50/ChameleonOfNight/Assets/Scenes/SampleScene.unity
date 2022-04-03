@@ -610,6 +610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drainSpeed: 5
   regenSpeed: 2
+  animator: {fileID: 1785698607}
   maxHitPoints: 100
   hitPoints: 0
 --- !u!4 &103083411
@@ -619,15 +620,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 103083409}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.867, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.202, y: -4.541, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 25437681163255127}
   - {fileID: 1011776818}
   - {fileID: 1785698609}
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_Father: {fileID: 1199150628}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &113819489 stripped
 MonoBehaviour:
@@ -2025,7 +2026,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &466096491
 GameObject:
@@ -2563,7 +2564,7 @@ Transform:
   - {fileID: 5375340081356379078}
   - {fileID: 1511292118}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &571100099
 GameObject:
@@ -2688,7 +2689,7 @@ RectTransform:
   - {fileID: 1512145011}
   - {fileID: 2030964126}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4045,7 +4046,7 @@ Transform:
   - {fileID: 1406678267}
   - {fileID: 1493320832}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &778585739
 GameObject:
@@ -4899,9 +4900,14 @@ MonoBehaviour:
   StarPerLevelRadius: 0.15
   SpeedUpgradeSprite: {fileID: 21300000, guid: caeb9f1ada64d0840b65a7691c58057f, type: 3}
   ChainUpgradeSprite: {fileID: 21300000, guid: b6b4fb25ffc77824fb8f49677092938b, type: 3}
-  ChainRangeUpgradeSprite: {fileID: 21300000, guid: d00e97ca5e1e02d43b7e9ce66efa449a, type: 3}
-  StarPointsUpgradeSprite: {fileID: 21300000, guid: a511f6c5231f4d145b043c86c74aae49, type: 3}
-  StarRadiusUpgradeSprite: {fileID: 21300000, guid: cef2377f1f49d874c91902598ae8427e, type: 3}
+  ChainRangeUpgradeSprite: {fileID: 21300000, guid: 321cf53579def1b4294935e54dc326d7, type: 3}
+  StarPointsUpgradeSprite: {fileID: 21300000, guid: 1f5682ffcafe1864c8d71ee591f0c00f, type: 3}
+  StarRadiusUpgradeSprite: {fileID: 21300000, guid: e257812b83e69414ea1bf07a1c250b21, type: 3}
+  SpeedUpgradeSpriteSecondary: {fileID: 21300000, guid: 2b5945658c6739445920f0d336d8b4e6, type: 3}
+  ChainUpgradeSpriteSecondary: {fileID: 21300000, guid: 4b3b0d42dee0d0742a6801806ef13d12, type: 3}
+  ChainRangeUpgradeSpriteSecondary: {fileID: 21300000, guid: b07a2d5ee6a47af4d81a5eacd8002bde, type: 3}
+  StarPointsUpgradeSpriteSecondary: {fileID: 21300000, guid: da986522c75757c418ec698c10b5d5b2, type: 3}
+  StarRadiusUpgradeSpriteSecondary: {fileID: 21300000, guid: 19166516b4bd4da428c0b5df223fa498, type: 3}
   ChainLevel: 0
   ChainRangeLevel: 0
   StarPointsLevel: 0
@@ -4919,7 +4925,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1009039354
 GameObject:
@@ -6624,7 +6630,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.705, y: 4.541, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 103083411}
   m_Father: {fileID: 1861920246}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10637,6 +10644,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1785698607 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4229770487023770822, guid: c3f63bbadd54b1f4fb69bacb7d9b4efb, type: 3}
+  m_PrefabInstance: {fileID: 1118935977}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1785698609 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4229770487023770820, guid: c3f63bbadd54b1f4fb69bacb7d9b4efb, type: 3}
