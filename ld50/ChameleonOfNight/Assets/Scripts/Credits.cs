@@ -11,10 +11,10 @@ public class Credits : MonoBehaviour
         thisRect = GetComponent<RectTransform>();
     }
     public void Appear() {
-        thisRect.DOAnchorPosX(thisRect.anchoredPosition.x - 2, 1f);
+        thisRect.DOAnchorPosX(thisRect.anchoredPosition.x - 600, 1f);
     }
 
     public void Disappear() {
-        thisRect.DOAnchorPosX(thisRect.anchoredPosition.x + 2, 1f);
+        thisRect.DOAnchorPosX(thisRect.anchoredPosition.x + 600, 1f);
     }
 }

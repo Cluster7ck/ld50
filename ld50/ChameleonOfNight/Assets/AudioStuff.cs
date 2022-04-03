@@ -21,6 +21,8 @@ public class AudioStuff : MonoBehaviour
     [SerializeField] private AudioClip munch2;
     [SerializeField] private AudioClip slurp;
 
+    [SerializeField] private AudioClip[] hitSounds;
+
     private Queue<AudioClip> soundQueue  = new Queue<AudioClip>();
 
     [SerializeField] private float splatCooldown;
@@ -47,7 +49,7 @@ public class AudioStuff : MonoBehaviour
     {
         // for every consecutive hit raise the pitch by a semi tone
         oneShotSource.pitch = Mathf.Pow(1.05946f, splats);
-        oneShotSource.PlayOneShot(splat);
+        oneShotSource.PlayOneShot(hitSounds[Random.Range(0, hitSounds.Length)]);
         currentSplatTime = splatCooldown;
         splats++;
     }
