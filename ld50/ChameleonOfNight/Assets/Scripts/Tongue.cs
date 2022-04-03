@@ -12,6 +12,9 @@ public class Tongue : MonoBehaviour
     [SerializeField] private float tongueColliderRadius;
     [SerializeField] private LayerMask insectMask;
 
+    [SerializeField] private float tongueExtendSpeedPowerUp;
+    [SerializeField] private float tongueRetreatSpeedPowerUp;
+
     [SerializeField] private float tongueExtendSpeed;
     [SerializeField] private float tongueRetreatSpeed;
     [SerializeField] private Ease tongueFlickeExtendEase;
@@ -64,7 +67,7 @@ public class Tongue : MonoBehaviour
                                 break;
                         }
                     }
-                    else if(depth == 0 && Upgrades.Instance.StarRadiusLevel > 0)
+                    else if(depth == 0 && Upgrades.Instance.StarPointsLevel > 0)
                     {
                         DoExtendStar();
                     }
@@ -103,8 +106,8 @@ public class Tongue : MonoBehaviour
         for(int i = 0; i < starPoints; i++)
         {
             var a = step * i;
-            var x = radius * Mathf.Cos(a);
-            var y = radius * Mathf.Sin(a);
+            var x = radius * Mathf.Cos(a + Mathf.PI/2);
+            var y = radius * Mathf.Sin(a + Mathf.PI/2);
             var target = tongueCollider.position + new Vector3(x, y, 0);
 
             var tongue = Instantiate(tonguePrefab);
@@ -117,36 +120,39 @@ public class Tongue : MonoBehaviour
 
         var newDepth = depth - 1;
         var enemiesInRange = Physics.OverlapSphere(tongueCollider.transform.position, Upgrades.Instance.ChainRange, insectMask);
-        if(enemiesInRange.Length > 0)
-        {
-            float closestEnemeyDistance = float.MaxValue;
-            GameObject closestEnemy = null;
+        
+        float closestEnemeyDistance = float.MaxValue;
+        GameObject closestEnemy = null;
 
-            foreach(Collider checkEnemy in enemiesInRange) {
-                if(!checkEnemy.gameObject.GetComponent<Fly>().isHit)
+        foreach(Collider checkEnemy in enemiesInRange) {
+            if(!checkEnemy.gameObject.GetComponent<Fly>().isHit)
+            {
+                if(closestEnemy == null) {
+                    closestEnemy = checkEnemy.gameObject;
+                }
+                else
                 {
-                    if(closestEnemy == null) {
-                        closestEnemy = checkEnemy.gameObject;
-                    }
-                    else
-                    {
-                        float distance = Vector3.Distance(checkEnemy.transform.position, tongueCollider.transform.position);
+                    float distance = Vector3.Distance(checkEnemy.transform.position, tongueCollider.transform.position);
 
-                        if(distance < closestEnemeyDistance) {
-                            closestEnemy = checkEnemy.gameObject;
-                            closestEnemeyDistance = distance;
-                        }
+                    if(distance < closestEnemeyDistance) {
+                        closestEnemy = checkEnemy.gameObject;
+                        closestEnemeyDistance = distance;
                     }
                 }
             }
-            if(closestEnemy != null)
-            {
-                sequence.Kill();
+        }
 
-                var tongue = Instantiate(tonguePrefab);
-                tongue.ExtendFrom(tongueCollider.position, closestEnemy.transform.position, type, newDepth, OnExtendCompleted, tonguePrefab);
-                startedExtraExtend = 1;
-            }
+        if(closestEnemy != null)
+        {
+            sequence.Kill();
+
+            var tongue = Instantiate(tonguePrefab);
+            tongue.ExtendFrom(tongueCollider.position, closestEnemy.transform.position, type, newDepth, OnExtendCompleted, tonguePrefab);
+            startedExtraExtend = 1;
+        }
+        else if(Upgrades.Instance.StarPointsLevel > 0)
+        {
+            DoExtendStar();
         }
         else
         {
@@ -194,7 +200,9 @@ public class Tongue : MonoBehaviour
     private float CalcAnimTime(Vector3 origin, Vector3 target, float speed)
     {
         var dist = Vector3.Distance(origin, target);
-        return dist/speed;
+        var time = dist/speed;
+        var remapped = time.Remap(0,0.25f,0.08f,0.25f);
+        return remapped;
     }
 
     private void SetTongueTip(Vector3 target)

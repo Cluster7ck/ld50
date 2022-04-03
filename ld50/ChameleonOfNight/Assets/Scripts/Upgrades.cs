@@ -26,6 +26,12 @@ public class Upgrades : MonoBehaviour
     [SerializeField] private Sprite StarPointsUpgradeSprite;
     [SerializeField] private Sprite StarRadiusUpgradeSprite;
 
+    [SerializeField] private Sprite SpeedUpgradeSpriteSecondary;
+    [SerializeField] private Sprite ChainUpgradeSpriteSecondary;
+    [SerializeField] private Sprite ChainRangeUpgradeSpriteSecondary;
+    [SerializeField] private Sprite StarPointsUpgradeSpriteSecondary;
+    [SerializeField] private Sprite StarRadiusUpgradeSpriteSecondary;
+
     public float ExtraSpeed => SpeedLevel * BaseSpeedMultiplier;
     public float StarRadius => StarRadiusLevel * StarPerLevelRadius + StarBaseRadius;
     public float ChainRange => ChainRangeLevel * ChainPerLevelRange + ChainBaseRange;
@@ -117,6 +123,7 @@ public class Upgrades : MonoBehaviour
     {
         options.Add(new UpgradeOption{
             sprite = SpeedUpgradeSprite,
+            spriteSecondary = SpeedUpgradeSpriteSecondary,
             onSelected = () => SpeedLevel += 1,
             currentLevel = SpeedLevel,
             text = "Tongue speed"
@@ -127,6 +134,7 @@ public class Upgrades : MonoBehaviour
     {
         options.Add(new UpgradeOption{
             sprite = StarPointsUpgradeSprite,
+            spriteSecondary=StarPointsUpgradeSpriteSecondary,
             onSelected = () => {
                 if(StarPointsLevel == 0)
                 {
@@ -148,6 +156,7 @@ public class Upgrades : MonoBehaviour
         {
             options.Add(new UpgradeOption{
                 sprite = StarRadiusUpgradeSprite,
+                spriteSecondary=StarPointsUpgradeSpriteSecondary,
                 onSelected = () => StarRadiusLevel += 1,
                 currentLevel = StarRadiusLevel,
                 text = "Split radius"
@@ -159,6 +168,7 @@ public class Upgrades : MonoBehaviour
     {
         options.Add(new UpgradeOption{
             sprite = ChainUpgradeSprite,
+            spriteSecondary = StarPointsUpgradeSpriteSecondary,
             onSelected = () => ChainLevel += 1,
             currentLevel = ChainLevel,
             text = "Tongue bounces"
@@ -171,6 +181,7 @@ public class Upgrades : MonoBehaviour
         {
             options.Add(new UpgradeOption{
                 sprite = ChainRangeUpgradeSprite,
+                spriteSecondary=StarPointsUpgradeSpriteSecondary,
                 onSelected = () => ChainRangeLevel += 1,
                 currentLevel = ChainRangeLevel,
                 text = "Increase Bounce Range"
@@ -183,6 +194,7 @@ public class Upgrades : MonoBehaviour
 public class UpgradeOption
 {
     public Sprite sprite;
+    public Sprite spriteSecondary;
     public Action onSelected;
     public int currentLevel;
     public string text;

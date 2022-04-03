@@ -118,7 +118,7 @@ public class Highscore : MonoBehaviour
     {
         option.onSelected();
         var icon = Instantiate(skillLearnedPrefab);
-        icon.GetComponent<Image>().sprite = option.sprite;
+        icon.GetComponent<UpgradeIcon>().SetSprite(option.spriteSecondary);
         icon.transform.SetParent(skillLearnedParent);
     }
 
