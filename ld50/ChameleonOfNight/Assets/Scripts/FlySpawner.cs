@@ -10,6 +10,9 @@ public class FlySpawner : MonoBehaviour
     [SerializeField] private float _chanceToCarryTongueUp;
     [SerializeField] private List<SpawnZone> spawnZones;
 
+    public List<Fly> liveEnemies = new List<Fly>();
+
+    private float spawnerTime;
     private float nextEnemyTime;
     private float _timeSinceLastSpawn;
     private int _enemiesSpawned;
@@ -20,7 +23,24 @@ public class FlySpawner : MonoBehaviour
     void Start()
     {
         Highscore.Instance.OnHighscore.AddListener(OnHighscore);
+    }
+
+    public void StartSpawning()
+    {
+        shouldSpawn = true;
+        spawnerTime = 0;
         nextEnemyTime = GetSpawnRate();
+    }
+
+    public async void Reset()
+    {
+        shouldSpawn = false;
+        for(int i = liveEnemies.Count - 1; i >= 0; i--)
+        {
+            var e = liveEnemies[i];
+            Destroy(e.gameObject);
+        }
+        liveEnemies.Clear();
     }
 
 
@@ -37,12 +57,15 @@ public class FlySpawner : MonoBehaviour
             SpawnEnemy();
         }
         _timeSinceLastSpawn += Time.deltaTime;
+        spawnerTime += Time.deltaTime;
     }
 
     private void SpawnEnemy() {
         GameObject newEnemy = Instantiate(enemyPrefab, SpawnPosition(), Quaternion.identity);
-        Enemy enemy = newEnemy.GetComponent<Enemy>();
-        enemy.SetTarget(enemyTarget);
+        Fly enemy = newEnemy.GetComponent<Fly>();
+        enemy.Init(enemyTarget, this);
+
+        liveEnemies.Add(enemy);
         
         if(Random.Range(0f, 1f) < _chanceToCarryTongueUp) {
             enemy.SetTongueUp(TongueUpType.Chain);
@@ -56,7 +79,7 @@ public class FlySpawner : MonoBehaviour
 
     private float GetSpawnRate()
     {
-        var spawnRate = 1.0f / (Mathf.Clamp(Mathf.RoundToInt(Time.timeSinceLevelLoad/60), 1, int.MaxValue));
+        var spawnRate = 1.0f / (Mathf.Clamp(Mathf.RoundToInt(spawnerTime/60), 1, int.MaxValue));
         return Helper.RandomGaussian(spawnRate * 0.8f, spawnRate * 1.2f) * _enemySpawnRate;
     }
 

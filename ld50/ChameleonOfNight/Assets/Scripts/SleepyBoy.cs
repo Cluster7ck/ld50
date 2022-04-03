@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +18,22 @@ public class SleepyBoy : MonoBehaviour
     public float maxHitPoints;
     public float hitPoints;
     private int suckers;
+    private Action loseAction;
 
     public void Awake()
     {
         instance = this;
+        hitPoints = maxHitPoints;
+    }
+
+    public void SetLoseAction(Action action)
+    {
+        loseAction =  action;
+    }
+
+    public void Reset()
+    {
+        suckers = 0;
         hitPoints = maxHitPoints;
     }
 
@@ -38,12 +51,13 @@ public class SleepyBoy : MonoBehaviour
 
         if(hitPoints <= 0)
         {
-            // TODO LOSE
+            loseAction();
         }
     }
 
     public void Suck()
     {
+        Debug.Log("Sucker");
         suckers++;
     }
     public void DeSuck()

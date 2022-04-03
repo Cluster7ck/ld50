@@ -20,10 +20,15 @@ public class Highscore : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text levelText;
 
     [SerializeField] private GameObject levelUpScreen;
+
     [SerializeField] private Button leftButton;
     [SerializeField] private Image leftButtonImage;
+    [SerializeField] private TMPro.TMP_Text leftButtonText;
+
     [SerializeField] private Button rightButton;
     [SerializeField] private Image rightButtonImage;
+    [SerializeField] private TMPro.TMP_Text rightButtonText;
+
     [SerializeField] private GameObject skillLearnedPrefab;
     [SerializeField] private RectTransform skillLearnedParent;
 
@@ -40,6 +45,14 @@ public class Highscore : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        Reset();
+    }
+
+    public void Reset()
+    {
+        playerLevel = 1;
+        currentXp = 0;
+        lastXp = 0;
         SetXp(currentXp);
         SetPlayerLevel(playerLevel);
         levelUpScreen.SetActive(false);
@@ -73,20 +86,22 @@ public class Highscore : MonoBehaviour
         }
     }
 
-    private void OpenLevelScreen(List<UpgradeOptions> options)
+    private void OpenLevelScreen(List<UpgradeOption> options)
     {
         Time.timeScale = 0.005f;
         levelUpScreen.gameObject.SetActive(true);
 
-        ButtonAnimation(leftButton.gameObject);
-        leftButtonImage.sprite = options[0].sprite;
-        leftButton.onClick.AddListener(() => OnButtonClicked(options[0]));
-        leftButton.onClick.AddListener(CloseLevelScreen);
+        SetupButton(leftButton, leftButtonImage, leftButtonText, options[0]);
+        SetupButton(rightButton, rightButtonImage, rightButtonText, options[1]);
+    }
 
-        ButtonAnimation(rightButton.gameObject);
-        rightButtonImage.sprite = options[1].sprite;
-        rightButton.onClick.AddListener(() => OnButtonClicked(options[1]));
-        rightButton.onClick.AddListener(CloseLevelScreen);
+    private void SetupButton(Button button, Image image, TMPro.TMP_Text text, UpgradeOption option)
+    {
+        ButtonAnimation(button.gameObject);
+        image.sprite = option.sprite;
+        //text.text = option.text;
+        button.onClick.AddListener(() => OnButtonClicked(option));
+        button.onClick.AddListener(CloseLevelScreen);
     }
 
     private void ButtonAnimation(GameObject button)
@@ -99,7 +114,7 @@ public class Highscore : MonoBehaviour
             .SetUpdate(true);
     }
 
-    private void OnButtonClicked(UpgradeOptions option)
+    private void OnButtonClicked(UpgradeOption option)
     {
         option.onSelected();
         var icon = Instantiate(skillLearnedPrefab);

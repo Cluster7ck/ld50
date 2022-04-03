@@ -39,15 +39,20 @@ public class Upgrades : MonoBehaviour
     // more tongues?
     // Charm explosion: turns flies onto other flies 
 
+    public void Reset()
+    {
+        ChainLevel = 0;
+        ChainRangeLevel = 0;
+        StarRadiusLevel = 0;
+        StarPointsLevel = 0;
+        SpeedLevel = 0;
+    }
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            ChainLevel = 0;
-            ChainRangeLevel = 0;
-            StarRadiusLevel = 0;
-            StarPointsLevel = 0;
-            SpeedLevel = 0;
+            Reset();
         }
         if(Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -95,9 +100,9 @@ public class Upgrades : MonoBehaviour
         instance = this;   
     }
 
-    public List<UpgradeOptions> GetUpgradeOptions()
+    public List<UpgradeOption> GetUpgradeOptions()
     {
-        var options = new List<UpgradeOptions>();
+        var options = new List<UpgradeOption>();
         AddSpeedOption(options);
         AddStarPointsOption(options);
         AddStarRadiusOption(options);
@@ -108,18 +113,19 @@ public class Upgrades : MonoBehaviour
         return options.Take(2).ToList();
     }
 
-    private void AddSpeedOption(List<UpgradeOptions> options)
+    private void AddSpeedOption(List<UpgradeOption> options)
     {
-        options.Add(new UpgradeOptions{
+        options.Add(new UpgradeOption{
             sprite = SpeedUpgradeSprite,
             onSelected = () => SpeedLevel += 1,
             currentLevel = SpeedLevel,
+            text = "Tongue speed"
         });
     }
 
-    private void AddStarPointsOption(List<UpgradeOptions> options)
+    private void AddStarPointsOption(List<UpgradeOption> options)
     {
-        options.Add(new UpgradeOptions{
+        options.Add(new UpgradeOption{
             sprite = StarPointsUpgradeSprite,
             onSelected = () => {
                 if(StarPointsLevel == 0)
@@ -132,47 +138,52 @@ public class Upgrades : MonoBehaviour
                 }
             },
             currentLevel = StarPointsLevel,
+            text = "Tongue splits"
         });
     }
 
-    private void AddStarRadiusOption(List<UpgradeOptions> options)
+    private void AddStarRadiusOption(List<UpgradeOption> options)
     {
         if(StarPointsLevel > 0)
         {
-            options.Add(new UpgradeOptions{
+            options.Add(new UpgradeOption{
                 sprite = StarRadiusUpgradeSprite,
                 onSelected = () => StarRadiusLevel += 1,
                 currentLevel = StarRadiusLevel,
+                text = "Split radius"
             });
         }
     }
 
-    private void AddChainOption(List<UpgradeOptions> options)
+    private void AddChainOption(List<UpgradeOption> options)
     {
-        options.Add(new UpgradeOptions{
+        options.Add(new UpgradeOption{
             sprite = ChainUpgradeSprite,
             onSelected = () => ChainLevel += 1,
             currentLevel = ChainLevel,
+            text = "Tongue bounces"
         });
     }
 
-    private void AddChainRangeOption(List<UpgradeOptions> options)
+    private void AddChainRangeOption(List<UpgradeOption> options)
     {
         if(ChainLevel > 0)
         {
-            options.Add(new UpgradeOptions{
+            options.Add(new UpgradeOption{
                 sprite = ChainRangeUpgradeSprite,
                 onSelected = () => ChainRangeLevel += 1,
                 currentLevel = ChainRangeLevel,
+                text = "Increase Bounce Range"
             });
         }
     }
 
 }
 
-public class UpgradeOptions
+public class UpgradeOption
 {
     public Sprite sprite;
     public Action onSelected;
     public int currentLevel;
+    public string text;
 }

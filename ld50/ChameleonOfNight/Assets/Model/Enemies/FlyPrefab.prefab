@@ -125,10 +125,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8217080972379816159}
   - component: {fileID: 1826309173626084967}
-  - component: {fileID: 3114295259655567150}
   - component: {fileID: 4370724433264109814}
   - component: {fileID: 6296857957493505552}
   - component: {fileID: 8992022231058899718}
+  - component: {fileID: 3561968382623930772}
   m_Layer: 11
   m_Name: FlyPrefab
   m_TagString: Untagged
@@ -160,23 +160,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5805448201070011187}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &3114295259655567150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5805448201070011187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0025bcc3824062c47b815524a6e0ffaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _flightTime: 4
-  _flightDirectionChanges: 10
-  pullToTarget: 0.5
-  step: 0.05
-  scoreValue: 10
 --- !u!65 &4370724433264109814
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -216,6 +199,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7971233, y: 0.22148949, z: 0.10654327}
   m_Center: {x: 0.0048544994, y: -0.1475053, z: 0.036786363}
+--- !u!114 &3561968382623930772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5805448201070011187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3ce7015e37e2b94da0d1b4718ec3ce4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreValue: 10
+  _flightTime: 10
+  _flightDirectionChanges: 10
+  pullToTarget: 0.6
+  step: 0.02
 --- !u!1001 &7643626432622956705
 PrefabInstance:
   m_ObjectHideFlags: 0
