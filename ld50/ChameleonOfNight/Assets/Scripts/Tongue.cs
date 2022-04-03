@@ -201,7 +201,6 @@ public class Tongue : MonoBehaviour
     {
         var dist = Vector3.Distance(origin, target);
         var time = dist/speed;
-        Debug.Log("AnimTime: "+time);
         var remapped = time.Remap(0,0.25f,0.08f,0.25f);
         return remapped;
     }

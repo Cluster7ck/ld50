@@ -34,5 +34,6 @@ public class StartKill : Enemy
 
         transform.position = startPos;
         transform.rotation = startRot;
+        isHit = false;
     }
 }
