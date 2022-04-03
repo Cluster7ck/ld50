@@ -51,7 +51,6 @@ public class FlySpawner : MonoBehaviour
     public void OnHighscore(int highScore)
     {
         // remap highscore to higher spawn rate and stuff
-        Debug.Log("Highscore: " + highScore);
     }
 
     // Update is called once per frame

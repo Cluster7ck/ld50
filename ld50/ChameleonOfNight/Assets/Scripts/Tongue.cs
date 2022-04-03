@@ -50,9 +50,8 @@ public class Tongue : MonoBehaviour
                     enemies.Add(enemy);
                     enemy.Hit();
                     enemy.transform.SetParent(tongueCollider);
-                    Instantiate(splashParticleSystemPrefab, tongueCollider.transform.position, Quaternion.identity);
-                    AudioSource audioClip = Instantiate(splashAudioSourcePrefab, tongueCollider.transform.position, Quaternion.identity).GetComponent<AudioSource>();
-                    audioClip.pitch += depth/10;
+
+                    AudioStuff.Instance.PlaySplat();
 
                     if(depth > 0)
                     {
