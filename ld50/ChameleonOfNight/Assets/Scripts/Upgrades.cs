@@ -156,7 +156,7 @@ public class Upgrades : MonoBehaviour
         {
             options.Add(new UpgradeOption{
                 sprite = StarRadiusUpgradeSprite,
-                spriteSecondary=StarPointsUpgradeSpriteSecondary,
+                spriteSecondary=StarRadiusUpgradeSpriteSecondary,
                 onSelected = () => StarRadiusLevel += 1,
                 currentLevel = StarRadiusLevel,
                 text = "Split radius"
@@ -168,7 +168,7 @@ public class Upgrades : MonoBehaviour
     {
         options.Add(new UpgradeOption{
             sprite = ChainUpgradeSprite,
-            spriteSecondary = StarPointsUpgradeSpriteSecondary,
+            spriteSecondary = ChainUpgradeSpriteSecondary,
             onSelected = () => ChainLevel += 1,
             currentLevel = ChainLevel,
             text = "Tongue bounces"
@@ -181,7 +181,7 @@ public class Upgrades : MonoBehaviour
         {
             options.Add(new UpgradeOption{
                 sprite = ChainRangeUpgradeSprite,
-                spriteSecondary=StarPointsUpgradeSpriteSecondary,
+                spriteSecondary=ChainRangeUpgradeSpriteSecondary,
                 onSelected = () => ChainRangeLevel += 1,
                 currentLevel = ChainRangeLevel,
                 text = "Increase Bounce Range"

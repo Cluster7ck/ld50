@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class InputShit : MonoBehaviour
 {
-    public GameObject indicator;
     public EventSystem eventSystem;
     public LayerMask insectPlaneLayer;
     public ChameleonController chameleonController;
@@ -23,7 +22,6 @@ public class InputShit : MonoBehaviour
         if(!EventSystem.current.IsPointerOverGameObject())
         {
             var cursorWorldPos = GetPointUnderCursor();
-            indicator.transform.position = cursorWorldPos;
             
             if(Input.GetMouseButtonDown(0))
             {

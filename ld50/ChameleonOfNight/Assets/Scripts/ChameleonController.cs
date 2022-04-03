@@ -48,6 +48,8 @@ public class ChameleonController : MonoBehaviour
     public void Click(Vector3 worldPos)
     {
         if(currentlyExtending) return;
+
+        AudioStuff.Instance.PlaySlurp();
         activeTongue = Instantiate(tonguePrefab);
         activeTongue.ExtendFrom(tongueOrigin.position, worldPos, TongueUpType.Chain, Upgrades.Instance.ChainLevel, OnExtendCompleted, tonguePrefab);
         DoHeadAnimation();
@@ -56,6 +58,7 @@ public class ChameleonController : MonoBehaviour
 
     private void OnExtendCompleted(List<Enemy> enemies)
     {
+        AudioStuff.Instance.PlayMunch();
         currentlyExtending = false;
         jawHinge.DORotate(Vector3.zero, jawSpeed).SetEase(jawDownEase);
         headHinge.DORotate(Vector3.zero, headSpeed).SetEase(jawDownEase);
