@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 792.1904, g: 671.68774, b: 592.0176, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4213,6 +4213,59 @@ VisualEffect:
       m_Array: []
     m_Bool:
       m_Array: []
+--- !u!1 &1000397252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1000397254}
+  - component: {fileID: 1000397253}
+  m_Layer: 0
+  m_Name: Upgrades
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1000397253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000397252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4cef4ef912ad7845be52140610b7012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BaseSpeedMultiplier: 0.2
+  ChainBaseRange: 0.9
+  ChainPerLevelRange: 0.2
+  StarBaseRadius: 0.3
+  StarPerLevelRadius: 0.15
+  ChainLevel: 0
+  ChainRangeLevel: 0
+  StarPointsLevel: 0
+  StarRadiusLevel: 0
+  SpeedLevel: 0
+--- !u!4 &1000397254
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000397252}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.9613323, y: 1.9676572, z: 1.234788}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1009039354
 GameObject:
   m_ObjectHideFlags: 0
@@ -6714,12 +6767,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1011776817}
     - target: {fileID: 54649104014852006, guid: d09a3c2480b6a1649b0fd568f94f3f74, type: 3}
+      propertyPath: shouldSpawn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54649104014852006, guid: d09a3c2480b6a1649b0fd568f94f3f74, type: 3}
       propertyPath: _enemyPotential
       value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 54649104014852006, guid: d09a3c2480b6a1649b0fd568f94f3f74, type: 3}
       propertyPath: _enemySpawnRate
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 54649104014852006, guid: d09a3c2480b6a1649b0fd568f94f3f74, type: 3}
       propertyPath: spawnRateSlowdowner
@@ -6727,7 +6784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 54649104014852006, guid: d09a3c2480b6a1649b0fd568f94f3f74, type: 3}
       propertyPath: _chanceToCarryTongueUp
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 54649104014852006, guid: d09a3c2480b6a1649b0fd568f94f3f74, type: 3}
       propertyPath: spawnZones.Array.data[0]
@@ -11936,7 +11993,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 887166130125686764, guid: af794d894bd5b2a4a83d401ba822d8bd, type: 3}
       propertyPath: depth
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 887166130125686764, guid: af794d894bd5b2a4a83d401ba822d8bd, type: 3}
       propertyPath: sphereCollider
