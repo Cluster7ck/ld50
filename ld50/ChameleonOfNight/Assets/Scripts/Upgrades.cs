@@ -121,7 +121,16 @@ public class Upgrades : MonoBehaviour
     {
         options.Add(new UpgradeOptions{
             sprite = StarPointsUpgradeSprite,
-            onSelected = () => StarPointsLevel += 1,
+            onSelected = () => {
+                if(StarPointsLevel == 0)
+                {
+                    StarPointsLevel += 2;
+                }
+                else
+                {
+                    StarPointsLevel++;
+                }
+            },
             currentLevel = StarPointsLevel,
         });
     }
@@ -159,10 +168,11 @@ public class Upgrades : MonoBehaviour
         }
     }
 
-    public class UpgradeOptions
-    {
-        public Sprite sprite;
-        public Action onSelected;
-        public int currentLevel;
-    }
+}
+
+public class UpgradeOptions
+{
+    public Sprite sprite;
+    public Action onSelected;
+    public int currentLevel;
 }

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class OnHighscore : UnityEvent<int> {}
 public class Highscore : MonoBehaviour
@@ -17,6 +19,18 @@ public class Highscore : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text xpText;
     [SerializeField] private TMPro.TMP_Text levelText;
 
+    [SerializeField] private GameObject levelUpScreen;
+    [SerializeField] private Button leftButton;
+    [SerializeField] private Image leftButtonImage;
+    [SerializeField] private Button rightButton;
+    [SerializeField] private Image rightButtonImage;
+    [SerializeField] private GameObject skillLearnedPrefab;
+    [SerializeField] private RectTransform skillLearnedParent;
+
+    [SerializeField] private float buttonStartY;
+    [SerializeField] private float buttonEndY;
+    [SerializeField] private float buttonAnimTime;
+
     public OnHighscore OnHighscore = new OnHighscore();
 
     private int playerLevel = 1;
@@ -28,6 +42,7 @@ public class Highscore : MonoBehaviour
         instance = this;
         SetXp(currentXp);
         SetPlayerLevel(playerLevel);
+        levelUpScreen.SetActive(false);
     }
 
     private void Update()
@@ -48,16 +63,57 @@ public class Highscore : MonoBehaviour
         if(current >= GetXpForLevelUp())
         {
             // Show skill choose menu
+
             var options = Upgrades.Instance.GetUpgradeOptions();
-            foreach(var option in options)
-            {
-                Debug.Log(option);
-            }
-            options[1].onSelected();
+            OpenLevelScreen(options);
+
             currentXp = 0;
             SetXp(currentXp);
             SetPlayerLevel(playerLevel + 1);
         }
+    }
+
+    private void OpenLevelScreen(List<UpgradeOptions> options)
+    {
+        Time.timeScale = 0.005f;
+        levelUpScreen.gameObject.SetActive(true);
+
+        ButtonAnimation(leftButton.gameObject);
+        leftButtonImage.sprite = options[0].sprite;
+        leftButton.onClick.AddListener(() => OnButtonClicked(options[0]));
+        leftButton.onClick.AddListener(CloseLevelScreen);
+
+        ButtonAnimation(rightButton.gameObject);
+        rightButtonImage.sprite = options[1].sprite;
+        rightButton.onClick.AddListener(() => OnButtonClicked(options[1]));
+        rightButton.onClick.AddListener(CloseLevelScreen);
+    }
+
+    private void ButtonAnimation(GameObject button)
+    {
+        var p = button.transform.position;
+        button.transform.position = new Vector3(p.x, buttonStartY, p.z);
+
+        button.transform.DOLocalMoveY(buttonEndY, buttonAnimTime)
+            .SetEase(Ease.InBounce)
+            .SetUpdate(true);
+    }
+
+    private void OnButtonClicked(UpgradeOptions option)
+    {
+        option.onSelected();
+        var icon = Instantiate(skillLearnedPrefab);
+        icon.GetComponent<Image>().sprite = option.sprite;
+        icon.transform.SetParent(skillLearnedParent);
+    }
+
+    private void CloseLevelScreen()
+    {
+        Time.timeScale = 1;
+        levelUpScreen.gameObject.SetActive(false);
+
+        leftButton.onClick.RemoveAllListeners();
+        rightButton.onClick.RemoveAllListeners();
     }
 
     private void SetPlayerLevel(int level)
