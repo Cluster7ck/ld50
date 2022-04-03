@@ -18,6 +18,7 @@ public class Tongue : MonoBehaviour
     [SerializeField] private Ease tongueFlickeRetreatEase;
 
     [SerializeField] private GameObject splashParticleSystemPrefab;
+    [SerializeField] private GameObject splashAudioSourcePrefab;
 
     private TweenerCore<Vector3, Vector3, VectorOptions> extendTween;
     private Sequence sequence;
@@ -46,7 +47,9 @@ public class Tongue : MonoBehaviour
                     enemies.Add(enemy);
                     enemy.Hit();
                     enemy.transform.SetParent(tongueCollider);
-                    GameObject splash = Instantiate(splashParticleSystemPrefab, tongueCollider.transform.position, Quaternion.identity);
+                    Instantiate(splashParticleSystemPrefab, tongueCollider.transform.position, Quaternion.identity);
+                    AudioSource audioClip = Instantiate(splashAudioSourcePrefab, tongueCollider.transform.position, Quaternion.identity).GetComponent<AudioSource>();
+                    audioClip.pitch += depth/10;
 
                     if(depth > 0)
                     {

@@ -229,3 +229,4 @@ MonoBehaviour:
   tongueFlickeExtendEase: 15
   tongueFlickeRetreatEase: 17
   splashParticleSystemPrefab: {fileID: 4922966971045609723, guid: 3383823cf9cd2e34ab071ed64d8dba10, type: 3}
+  splashAudioSourcePrefab: {fileID: 7910822377572419529, guid: 14fa155592974044b89b3637b0ad6de4, type: 3}
