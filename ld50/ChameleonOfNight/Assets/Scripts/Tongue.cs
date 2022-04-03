@@ -70,19 +70,24 @@ public class Tongue : MonoBehaviour
                     }
                     else
                     {
-                        sequence.Kill();
-                        var retreatTime = CalcAnimTime(origin, tongueCollider.position, GetRetreatSpeed());
-                        DOTween.To(() => tongue.GetPosition(1), x => SetTongueTip(x), origin, retreatTime)
-                            .SetEase(tongueFlickeRetreatEase)
-                            .OnComplete(() => {
-                                onExtendCompleted(enemies);
-                                Destroy(gameObject);
-                            });
+                        ReturnToOrigin();
                     }
                     break;
                 }
             }
         }
+    }
+
+    private void ReturnToOrigin()
+    {
+        sequence.Kill();
+        var retreatTime = CalcAnimTime(origin, tongueCollider.position, GetRetreatSpeed());
+        DOTween.To(() => tongue.GetPosition(1), x => SetTongueTip(x), origin, retreatTime)
+            .SetEase(tongueFlickeRetreatEase)
+            .OnComplete(() => {
+                onExtendCompleted(enemies);
+                Destroy(gameObject);
+            });
     }
 
     private void DoExtendStar()
@@ -118,7 +123,7 @@ public class Tongue : MonoBehaviour
             GameObject closestEnemy = null;
 
             foreach(Collider checkEnemy in enemiesInRange) {
-                if(!checkEnemy.gameObject.GetComponent<Enemy>().isHit)
+                if(!checkEnemy.gameObject.GetComponent<Fly>().isHit)
                 {
                     if(closestEnemy == null) {
                         closestEnemy = checkEnemy.gameObject;
@@ -142,6 +147,10 @@ public class Tongue : MonoBehaviour
                 tongue.ExtendFrom(tongueCollider.position, closestEnemy.transform.position, type, newDepth, OnExtendCompleted, tonguePrefab);
                 startedExtraExtend = 1;
             }
+        }
+        else
+        {
+            ReturnToOrigin();
         }
     }
 
@@ -206,11 +215,7 @@ public class Tongue : MonoBehaviour
         if(startedExtraExtend == 0)
         {
             // RÜCKWEG
-            var retreatTime = CalcAnimTime(tongueCollider.position, origin, GetRetreatSpeed());
-            DOTween.To(() => tongue.GetPosition(1), x => SetTongueTip(x), origin, retreatTime).SetEase(tongueFlickeRetreatEase).OnComplete(() => {
-                onExtendCompleted(enemies);
-                Destroy(gameObject);
-            });
+            ReturnToOrigin();
         }
     }
 }

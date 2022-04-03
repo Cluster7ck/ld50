@@ -59,6 +59,12 @@ public class ChameleonController : MonoBehaviour
         currentlyExtending = false;
         jawHinge.DORotate(Vector3.zero, jawSpeed).SetEase(jawDownEase);
         headHinge.DORotate(Vector3.zero, headSpeed).SetEase(jawDownEase);
+
+        foreach(var enemy in enemies)
+        {
+            enemy.RealDestroy();
+        }
+
         Destroy(activeTongue.gameObject);
     }
 

@@ -14,6 +14,9 @@ public class FlySpawner : MonoBehaviour
     [SerializeField] private float chanceToCarryExtra;
     [SerializeField] private List<SpawnZone> spawnZones;
 
+    public List<Fly> liveEnemies = new List<Fly>();
+
+    private float spawnerTime;
     private float nextEnemyTime;
     private float _timeSinceLastSpawn;
     private int _enemiesSpawned;
@@ -24,7 +27,24 @@ public class FlySpawner : MonoBehaviour
     void Start()
     {
         Highscore.Instance.OnHighscore.AddListener(OnHighscore);
+    }
+
+    public void StartSpawning()
+    {
+        shouldSpawn = true;
+        spawnerTime = 0;
         nextEnemyTime = GetSpawnRate();
+    }
+
+    public async void Reset()
+    {
+        shouldSpawn = false;
+        for(int i = liveEnemies.Count - 1; i >= 0; i--)
+        {
+            var e = liveEnemies[i];
+            Destroy(e.gameObject);
+        }
+        liveEnemies.Clear();
     }
 
 
@@ -42,6 +62,7 @@ public class FlySpawner : MonoBehaviour
             SpawnEnemy();
         }
         _timeSinceLastSpawn += Time.deltaTime;
+        spawnerTime += Time.deltaTime;
     }
 
     private void SpawnEnemy() {
@@ -51,8 +72,10 @@ public class FlySpawner : MonoBehaviour
         } else {
             newEnemy = Instantiate(normalEnemy, SpawnPosition(), Quaternion.identity);
         }
-        Enemy enemy = newEnemy.GetComponent<Enemy>();
-        enemy.SetTarget(enemyTarget);
+        Fly enemy = newEnemy.GetComponent<Fly>();
+        enemy.Init(enemyTarget, this);
+
+        liveEnemies.Add(enemy);
         
         if(Random.Range(0f, 1f) < chanceToCarryExtra) {
             Debug.Log("Extra should be spawned");
