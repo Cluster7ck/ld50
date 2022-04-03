@@ -17,10 +17,6 @@ public class Tongue : MonoBehaviour
     [SerializeField] private Ease tongueFlickeExtendEase;
     [SerializeField] private Ease tongueFlickeRetreatEase;
 
-    [SerializeField] private int starMaxDepth;
-    [SerializeField] private float starRadius;
-    [SerializeField] private int starPointyNum;
-
     private TweenerCore<Vector3, Vector3, VectorOptions> extendTween;
     private Sequence sequence;
     private Action<List<Enemy>> onExtendCompleted;
@@ -31,10 +27,6 @@ public class Tongue : MonoBehaviour
     private int depth;
     private TongueUpType type;
     private int startedExtraExtend = 0;
-
-    [Header("ChainTongue")]
-    [SerializeField] private float chainRange;
-
 
     void Update()
     {
@@ -53,7 +45,7 @@ public class Tongue : MonoBehaviour
                     enemy.Hit();
                     enemy.transform.SetParent(tongueCollider);
 
-                    if(startedExtraExtend == 0 && type != TongueUpType.Nothing && depth > 0)
+                    if(depth > 0)
                     {
                         switch (type) {
                             case TongueUpType.Chain:
@@ -63,12 +55,12 @@ public class Tongue : MonoBehaviour
                                 DoExtendStar();
                                 break;
                             default:
-                                var tongue = Instantiate(tonguePrefab);
-                                var newDepth = depth - 1;
-                                tongue.ExtendFrom(tongueCollider.position, tongueCollider.position + Vector3.up * 1f, type, newDepth, OnExtendCompleted, tonguePrefab);
-                                startedExtraExtend = 1;
                                 break;
                         }
+                    }
+                    else if(depth == 0 && Upgrades.Instance.StarRadiusLevel > 0)
+                    {
+                        DoExtendStar();
                     }
                     break;
                 }
@@ -78,50 +70,57 @@ public class Tongue : MonoBehaviour
 
     private void DoExtendStar()
     {
+        int starPoints = Upgrades.Instance.StarPointsLevel;
+        if(starPoints <= 0) return;
+
         sequence.Kill();
-        float step = (Mathf.PI * 2.0f) / starPointyNum;
+        float step = (Mathf.PI * 2.0f) / starPoints;
 
         var newDepth = depth - 1;
-        for(int i = 0; i < starPointyNum; i++)
+        var radius = Upgrades.Instance.StarRadius;
+        for(int i = 0; i < starPoints; i++)
         {
             var a = step * i;
-            var x = starRadius/(starMaxDepth - depth) * Mathf.Cos(a);
-            var y = starRadius/(starMaxDepth - depth) * Mathf.Sin(a);
+            var x = radius * Mathf.Cos(a);
+            var y = radius * Mathf.Sin(a);
             var target = tongueCollider.position + new Vector3(x, y, 0);
 
             var tongue = Instantiate(tonguePrefab);
             tongue.ExtendFrom(tongueCollider.position, target, TongueUpType.Star, newDepth, OnExtendCompleted, tonguePrefab);
         }
-        startedExtraExtend = starPointyNum;
+        startedExtraExtend = starPoints;
     }
 
     private void DoExtendChain() {
 
         var newDepth = depth - 1;
-        Debug.Log("NewDepth: " + newDepth);
-        var enemiesInRange = Physics.OverlapSphere(tongueCollider.transform.position, chainRange, insectMask);
-        Debug.Log("EnemiesInRange: " + enemiesInRange.Length);
-        if(enemiesInRange.Length > 0) {
-            
+        var enemiesInRange = Physics.OverlapSphere(tongueCollider.transform.position, Upgrades.Instance.ChainRange, insectMask);
+        if(enemiesInRange.Length > 0)
+        {
+            float closestEnemeyDistance = float.MaxValue;
             GameObject closestEnemy = null;
+
             foreach(Collider checkEnemy in enemiesInRange) {
-                if(!checkEnemy.gameObject.GetComponent<Enemy>().isHit) {
-                    
+                if(!checkEnemy.gameObject.GetComponent<Enemy>().isHit)
+                {
                     if(closestEnemy == null) {
                         closestEnemy = checkEnemy.gameObject;
-                    } else {
+                    }
+                    else
+                    {
                         float distance = Vector3.Distance(checkEnemy.transform.position, tongueCollider.transform.position);
 
-                        if(distance < Vector3.Distance(closestEnemy.transform.position, tongueCollider.transform.position)) {
+                        if(distance < closestEnemeyDistance) {
                             closestEnemy = checkEnemy.gameObject;
-                            Debug.Log("New closest enemy: " + distance);
+                            closestEnemeyDistance = distance;
                         }
                     }
                 }
             }
-            if(closestEnemy != null) {
+            if(closestEnemy != null)
+            {
                 sequence.Kill();
-                Debug.Log("Closest enemy: " + closestEnemy);
+
                 var tongue = Instantiate(tonguePrefab);
                 tongue.ExtendFrom(tongueCollider.position, closestEnemy.transform.position, type, newDepth, OnExtendCompleted, tonguePrefab);
                 startedExtraExtend = 1;
@@ -145,8 +144,8 @@ public class Tongue : MonoBehaviour
         
         sequence = DOTween.Sequence();
 
-        var extendTime = CalcAnimTime(origin, target(), tongueExtendSpeed);
-        var retreatTime = CalcAnimTime(origin, target(), tongueRetreatSpeed);
+        var extendTime = CalcAnimTime(origin, target(), GetExtendSpeed());
+        var retreatTime = CalcAnimTime(origin, target(), GetRetreatSpeed());
         sequence.Append(DOTween.To(() => tongue.GetPosition(1), x => SetTongueTip(x), target(), extendTime).SetEase(tongueFlickeExtendEase));
         sequence.Append(DOTween.To(() => tongue.GetPosition(1), x => SetTongueTip(x), origin, retreatTime).SetEase(tongueFlickeRetreatEase));
         sequence.OnComplete(() => {
@@ -154,6 +153,16 @@ public class Tongue : MonoBehaviour
             Destroy(gameObject);
         });
         sequence.Play();
+    }
+
+    private float GetExtendSpeed()
+    {
+        return tongueExtendSpeed + Upgrades.Instance.ExtraSpeed;
+    }
+
+    private float GetRetreatSpeed()
+    {
+        return tongueRetreatSpeed + Upgrades.Instance.ExtraSpeed;
     }
 
     private float CalcAnimTime(Vector3 origin, Vector3 target, float speed)
@@ -180,7 +189,7 @@ public class Tongue : MonoBehaviour
         if(startedExtraExtend == 0)
         {
             // RÜCKWEG
-            var retreatTime = CalcAnimTime(tongueCollider.position, origin, tongueRetreatSpeed);
+            var retreatTime = CalcAnimTime(tongueCollider.position, origin, GetRetreatSpeed());
             DOTween.To(() => tongue.GetPosition(1), x => SetTongueTip(x), origin, retreatTime).SetEase(tongueFlickeRetreatEase).OnComplete(() => {
                 onExtendCompleted(enemies);
                 Destroy(gameObject);
