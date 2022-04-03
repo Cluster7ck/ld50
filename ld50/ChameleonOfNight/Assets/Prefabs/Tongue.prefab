@@ -231,4 +231,4 @@ MonoBehaviour:
   starMaxDepth: 5
   starRadius: 1
   starPointyNum: 7
-  chainRange: 2
+  chainRange: 3

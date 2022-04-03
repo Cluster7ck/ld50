@@ -130,6 +130,7 @@ public class Enemy : MonoBehaviour
         get { return _heldTongueUp; }
 
     }
+
     public void SetTongueUp(TongueUpType type) {
         _heldTongueUp = type;
         switch (_heldTongueUp) {

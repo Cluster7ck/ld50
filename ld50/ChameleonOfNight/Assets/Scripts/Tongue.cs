@@ -60,7 +60,6 @@ public class Tongue : MonoBehaviour
                                 DoExtendChain();
                                 break;
                             case TongueUpType.Star:
-                                sequence.Kill();
                                 DoExtendStar();
                                 break;
                             default:
@@ -79,6 +78,7 @@ public class Tongue : MonoBehaviour
 
     private void DoExtendStar()
     {
+        sequence.Kill();
         float step = (Mathf.PI * 2.0f) / starPointyNum;
 
         var newDepth = depth - 1;
@@ -136,7 +136,6 @@ public class Tongue : MonoBehaviour
 
     public void ExtendFrom(Vector3 origin, Func<Vector3> target, TongueUpType type, int depth, Action<List<Enemy>> onExtendCompleted, Tongue tonguePrefab)
     {
-        //Debug.Log($"New extend from: {origin} to: {target()}");
         this.tonguePrefab = tonguePrefab;
         this.origin = origin;
         this.depth = depth;
