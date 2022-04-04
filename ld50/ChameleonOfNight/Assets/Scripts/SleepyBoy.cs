@@ -15,7 +15,9 @@ public class SleepyBoy : MonoBehaviour
 
     [SerializeField] private float drainSpeed;
     [SerializeField] private float regenSpeed;
-    [SerializeField] private Animator animator;
+    [SerializeField] private Animator sleepy;
+    [SerializeField] private Animator twitchy;
+    [SerializeField] private Animator awake;
 
     public float maxHitPoints;
     public float hitPoints;
@@ -37,6 +39,7 @@ public class SleepyBoy : MonoBehaviour
     {
         suckers = 0;
         hitPoints = maxHitPoints;
+        AtRest();
     }
 
     private void Update() 
@@ -54,6 +57,7 @@ public class SleepyBoy : MonoBehaviour
 
         if(hitPoints <= 0)
         {
+            WakeUp();
             loseAction();
         }
     }
@@ -62,15 +66,38 @@ public class SleepyBoy : MonoBehaviour
     {
         suckers++;
 
-        animator.SetTrigger("twitch");
+        Twitchy();
     }
+
     public void DeSuck()
     {
         suckers--;
+        suckers = Mathf.Clamp(suckers,0, 100);
+        
         if(suckers == 0)
         {
-            animator.SetTrigger("rest");
+            AtRest();
         }
     }
+    
+    private void AtRest()
+    {
+        sleepy.gameObject.SetActive(true);
+        twitchy.gameObject.SetActive(false);
+        awake.gameObject.SetActive(false);
+    }
 
+    private void Twitchy()
+    {
+        sleepy.gameObject.SetActive(false);
+        twitchy.gameObject.SetActive(true);
+        awake.gameObject.SetActive(false);
+    }
+
+    private void WakeUp()
+    {
+        sleepy.gameObject.SetActive(false);
+        twitchy.gameObject.SetActive(false);
+        awake.gameObject.SetActive(true);
+    }
 }

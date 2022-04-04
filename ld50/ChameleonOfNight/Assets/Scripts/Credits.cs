@@ -6,15 +6,18 @@ using DG.Tweening;
 public class Credits : MonoBehaviour
 {
     private RectTransform thisRect;
+    [SerializeField] private float endY;
+    [SerializeField] private float startY;
 
     private void Start () {
         thisRect = GetComponent<RectTransform>();
+        endY = thisRect.transform.localPosition.y;
     }
     public void Appear() {
-        thisRect.DOAnchorPosX(thisRect.anchoredPosition.x - 600, 1f);
+        thisRect.transform.DOLocalMoveY(endY, 1f);
     }
 
     public void Disappear() {
-        thisRect.DOAnchorPosX(thisRect.anchoredPosition.x + 600, 1f);
+        thisRect.transform.DOLocalMoveY(startY, 1f);
     }
 }

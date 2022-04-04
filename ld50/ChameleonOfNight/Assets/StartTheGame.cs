@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StartTheGame : MonoBehaviour
 {
@@ -9,11 +10,14 @@ public class StartTheGame : MonoBehaviour
     [SerializeField] private SleepyBoy sleepyBoy;
     [SerializeField] private GameObject levelXpUi;
     [SerializeField] private Credits credits;
+    [SerializeField] private Button exitButton;
 
     public void Awake()
     {
         startKill.SetStartAction(StartIt);
         sleepyBoy.SetLoseAction(Reset);
+
+        exitButton.onClick.AddListener(() => Application.Quit());
     }
 
     public void Reset()
@@ -23,7 +27,6 @@ public class StartTheGame : MonoBehaviour
         spawner.Reset();
         Highscore.Instance.Reset();
         Upgrades.Instance.Reset();
-        sleepyBoy.Reset();
         levelXpUi.SetActive(false);
 
         startKill.gameObject.SetActive(true);
@@ -35,5 +38,6 @@ public class StartTheGame : MonoBehaviour
         spawner.StartSpawning();
         levelXpUi.SetActive(true);
         credits.Disappear();
+        sleepyBoy.Reset();
     }
 }

@@ -76,6 +76,7 @@ public class Fly : Enemy
                 currentMover?.Kill();
                 currentMover = transform.DOMove(lastPos, step/_flightTime).OnComplete(() => {
                     SleepyBoy.Instance.Suck();
+                    sucking = true;
                 });
             }
             else{
